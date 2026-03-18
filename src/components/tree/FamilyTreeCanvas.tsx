@@ -2,26 +2,27 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import {
-  ReactFlow,
   Background,
+  BackgroundVariant,
   Controls,
   MiniMap,
-  useNodesState,
+  Panel,
+  ReactFlow,
   useEdgesState,
-  BackgroundVariant,
-  type Node,
+  useNodesState,
   type Edge,
+  type Node,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
+import { GitBranch, Heart, Plus, Users } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { EmptyState } from '@/components/shared/EmptyState'
+import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
 import { MemberNode } from './MemberNode'
 import type { MemberNodeData } from '@/lib/tree-utils'
-import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
-import { EmptyState } from '@/components/shared/EmptyState'
-import { GitBranch, Plus } from 'lucide-react'
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 
 const nodeTypes = { memberNode: MemberNode }
 
@@ -51,8 +52,9 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
         setLoading(false)
       }
     }
+
     loadTree()
-  }, [familyId, t])
+  }, [familyId, setEdges, setNodes, t])
 
   const onNodeClick = useCallback(
     (_: React.MouseEvent, node: Node) => {
@@ -63,7 +65,7 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_top,#f8fafc_0%,#eef4ef_45%,#ffffff_100%)]">
         <LoadingSpinner size="lg" label={t('loading')} />
       </div>
     )
@@ -71,7 +73,7 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_top,#f8fafc_0%,#eef4ef_45%,#ffffff_100%)]">
         <EmptyState icon={GitBranch} title={t('errorTitle')} description={error} />
       </div>
     )
@@ -79,7 +81,7 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
 
   if (nodes.length === 0) {
     return (
-      <div className="flex items-center justify-center h-full">
+      <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_top,#f8fafc_0%,#eef4ef_45%,#ffffff_100%)]">
         <EmptyState
           icon={GitBranch}
           title={t('empty')}
@@ -98,31 +100,73 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
   }
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onNodeClick={onNodeClick}
-      nodeTypes={nodeTypes}
-      fitView
-      fitViewOptions={{ padding: 0.2 }}
-      minZoom={0.2}
-      maxZoom={2}
-      attributionPosition="bottom-right"
-      proOptions={{ hideAttribution: true }}
-    >
-      <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#e5e7eb" />
-      <Controls
-        showInteractive={false}
-        className="!rounded-xl !border-gray-200 !shadow-sm"
-      />
-      <MiniMap
-        nodeColor={(node: Node<MemberNodeData>) => node.data?.branchColor ?? '#1B4332'}
-        className="!rounded-xl !border-gray-200 !shadow-sm"
-        zoomable
-        pannable
-      />
-    </ReactFlow>
+    <div className="h-full bg-[radial-gradient(circle_at_top,#f8fafc_0%,#eef4ef_42%,#ffffff_100%)]">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeClick={onNodeClick}
+        nodeTypes={nodeTypes}
+        fitView
+        fitViewOptions={{ padding: 0.24 }}
+        minZoom={0.2}
+        maxZoom={1.8}
+        defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
+        attributionPosition="bottom-right"
+        proOptions={{ hideAttribution: true }}
+        className="[&_.react-flow__pane]:cursor-grab [&_.react-flow__pane]:active:cursor-grabbing [&_.react-flow__edge-path]:drop-shadow-[0_6px_12px_rgba(15,23,42,0.10)] [&_.react-flow__node.selected]:z-20"
+      >
+        <Background variant={BackgroundVariant.Dots} gap={28} size={1.2} color="#d8e4dc" />
+
+        <Panel position="top-left">
+          <div className="max-w-xs rounded-3xl border border-white/70 bg-white/88 p-4 shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-primary-700">
+              Family View
+            </p>
+            <h2 className="mt-2 text-base font-semibold text-slate-900">Trace generations at a glance</h2>
+            <p className="mt-1 text-sm leading-6 text-slate-500">
+              Solid branches show lineage. Dashed gold links mark spouses. Tap any card to open the full profile.
+            </p>
+            <div className="mt-4 space-y-2">
+              <div className="flex items-center gap-3 text-xs text-slate-600">
+                <span className="h-0.5 w-10 rounded-full bg-primary-700" />
+                Direct lineage
+              </div>
+              <div className="flex items-center gap-3 text-xs text-slate-600">
+                <span className="flex items-center gap-1">
+                  <span className="h-0.5 w-8 border-t-2 border-dashed border-[#B8891E]" />
+                  <Heart className="h-3 w-3 text-[#B8891E]" />
+                </span>
+                Marriage connection
+              </div>
+            </div>
+          </div>
+        </Panel>
+
+        <Panel position="top-right">
+          <div className="rounded-3xl border border-white/70 bg-white/88 px-4 py-3 text-right shadow-[0_18px_40px_rgba(15,23,42,0.10)] backdrop-blur">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">People shown</p>
+            <div className="mt-2 flex items-center justify-end gap-2 text-slate-900">
+              <Users className="h-4 w-4 text-primary-700" />
+              <span className="text-lg font-semibold">{nodes.length}</span>
+            </div>
+          </div>
+        </Panel>
+
+        <Controls
+          showInteractive={false}
+          className="!rounded-2xl !border !border-white/70 !bg-white/92 !shadow-[0_12px_30px_rgba(15,23,42,0.12)] backdrop-blur"
+        />
+
+        <MiniMap
+          nodeColor={(node: Node<MemberNodeData>) => node.data?.branchColor ?? '#1B4332'}
+          maskColor="rgba(241,245,249,0.72)"
+          pannable
+          zoomable
+          className="!rounded-3xl !border !border-white/70 !bg-white/92 !shadow-[0_18px_40px_rgba(15,23,42,0.12)] backdrop-blur"
+        />
+      </ReactFlow>
+    </div>
   )
 }

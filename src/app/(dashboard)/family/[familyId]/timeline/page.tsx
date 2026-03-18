@@ -106,8 +106,8 @@ export default async function TimelinePage({ params }: Props) {
                             {m.generationalTitle && <span className="text-gray-500">{m.generationalTitle} </span>}
                             {m.fullName}
                           </p>
-                          {m.kampung && (
-                            <p className="text-xs text-gray-400">📍 {m.kampung}{m.negeri ? `, ${m.negeri}` : ''}</p>
+                          {m.currentAddress && (
+                            <p className="text-xs text-gray-400">📍 {m.currentAddress}{m.negeri ? `, ${m.negeri}` : ''}</p>
                           )}
                         </div>
                       </Link>

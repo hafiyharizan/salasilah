@@ -15,7 +15,7 @@ const memberSchema = z.object({
   photoUrl: z.string().optional(),
   binBinti: z.string().optional(),
   icNumber: z.string().optional(),
-  kampung: z.string().optional(),
+  currentAddress: z.string().optional(),
   negeri: z.string().optional(),
   religion: z.nativeEnum(Religion).optional(),
   familyBranch: z.string().optional(),
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest, context: FamilyRouteContext) {
     where.OR = [
       { fullName: { contains: search, mode: 'insensitive' } },
       { nickname: { contains: search, mode: 'insensitive' } },
-      { kampung: { contains: search, mode: 'insensitive' } },
+      { currentAddress: { contains: search, mode: 'insensitive' } },
       { familyBranch: { contains: search, mode: 'insensitive' } },
       { generationalTitle: { contains: search, mode: 'insensitive' } },
       { binBinti: { contains: search, mode: 'insensitive' } },

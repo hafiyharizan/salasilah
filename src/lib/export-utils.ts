@@ -7,7 +7,7 @@ export function membersToCSV(members: FamilyMember[]): string {
   const headers = [
     'Nama Penuh', 'Nama Panggilan', 'Bin/Binti', 'Jantina',
     'Tarikh Lahir', 'Tarikh Meninggal', 'Tempat Lahir',
-    'Kampung', 'Negeri', 'Agama', 'Gelaran Keluarga',
+    'Alamat Semasa', 'Negeri', 'Agama', 'Gelaran Keluarga',
     'Cawangan Keluarga', 'Pekerjaan', 'No. IC',
     'Emel', 'Telefon', 'Biografi'
   ]
@@ -20,7 +20,7 @@ export function membersToCSV(members: FamilyMember[]): string {
     m.birthDate ? new Date(m.birthDate).toLocaleDateString('ms-MY') : '',
     m.deathDate ? new Date(m.deathDate).toLocaleDateString('ms-MY') : '',
     m.placeOfBirth ?? '',
-    m.kampung ?? '',
+    m.currentAddress ?? '',
     m.negeri ?? '',
     m.religion,
     m.generationalTitle ?? '',

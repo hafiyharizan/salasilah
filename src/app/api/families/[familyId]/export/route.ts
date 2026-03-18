@@ -35,7 +35,7 @@ export async function GET(request: NextRequest, context: FamilyRouteContext) {
       'Tarikh Lahir': m.birthDate ? new Date(m.birthDate).toLocaleDateString('ms-MY') : '',
       'Tarikh Meninggal': m.deathDate ? new Date(m.deathDate).toLocaleDateString('ms-MY') : '',
       'Tempat Lahir': m.placeOfBirth ?? '',
-      'Kampung': m.kampung ?? '',
+      'Alamat Semasa': m.currentAddress ?? '',
       'Negeri': m.negeri ?? '',
       'Agama': m.religion,
       'Gelaran Keluarga': m.generationalTitle ?? '',

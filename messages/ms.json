@@ -39,6 +39,7 @@
     "gallery": "Galeri",
     "timeline": "Linimasa",
     "settings": "Tetapan",
+    "map": "Peta",
     "signOut": "Log Keluar",
     "accountSettings": "Tetapan Akaun"
   },
@@ -122,8 +123,8 @@
     "binBintiPlaceholder": "cth: bin Abdullah @ binti Ahmad",
     "icNumber": "Nombor IC",
     "icPlaceholder": "000000-00-0000",
-    "kampung": "Kampung / Tempat Asal",
-    "kampungPlaceholder": "cth: Kampung Baru, Kelantan",
+    "currentAddress": "Alamat Semasa",
+    "currentAddressPlaceholder": "cth: 12 Jalan Mawar, Petaling Jaya",
     "negeri": "Negeri",
     "religion": "Agama",
     "familyBranch": "Cawangan Keluarga",
@@ -159,7 +160,7 @@
     "deceased": "Telah Meninggal",
     "alive": "Masih Hidup",
     "viewProfile": "Lihat Profil",
-    "searchPlaceholder": "Cari nama, kampung, cawangan...",
+    "searchPlaceholder": "Cari nama, alamat, cawangan...",
     "noMembers": "Belum ada ahli keluarga",
     "noMembersDesc": "Tambah ahli pertama keluarga anda",
     "memberCount": "{count} ahli",
@@ -186,6 +187,11 @@
     "selectMemberPlaceholder": "Pilih ahli keluarga...",
     "selectMemberError": "Sila pilih ahli keluarga",
     "success": "Hubungan keluarga ditambah!",
+    "remove": "Buang",
+    "removing": "Membuang...",
+    "removeTitle": "Buang Hubungan",
+    "removeConfirm": "Adakah anda pasti mahu membuang hubungan ini?",
+    "removeSuccess": "Hubungan dibuang!",
     "types": {
       "PARENT": "Ibu Bapa",
       "CHILD": "Anak",
@@ -322,7 +328,7 @@
       },
       "cultural": {
         "title": "Ciri Budaya Malaysia",
-        "desc": "Sokong nama Bin/Binti, IC, Kampung, agama, gelaran kekeluargaan dan banyak lagi"
+        "desc": "Sokong nama Bin/Binti, IC, alamat, agama, gelaran kekeluargaan dan banyak lagi"
       },
       "gallery": {
         "title": "Galeri Gambar",
@@ -334,7 +340,7 @@
       },
       "search": {
         "title": "Carian Pantas",
-        "desc": "Cari ahli keluarga mengikut nama, kampung, cawangan atau gelaran"
+        "desc": "Cari ahli keluarga mengikut nama, alamat, cawangan atau gelaran"
       },
       "export": {
         "title": "Eksport Data",
@@ -347,7 +353,7 @@
       "items": {
         "binBinti": "Sistem penamaan Bin/Binti",
         "generational": "Gelaran kekeluargaan (Tok, Wan, Pak Long, Mak Ngah...)",
-        "kampung": "Rekod kampung dan negeri asal",
+        "kampung": "Rekod alamat semasa dan negeri",
         "religion": "Sokongan pelbagai agama",
         "ic": "Nombor IC/MyKad",
         "branches": "Pengurusan cawangan keluarga"
@@ -363,6 +369,14 @@
       "tagline": "Merakam warisan keluarga Malaysia",
       "rights": "Hak cipta terpelihara"
     }
+  },
+  "map": {
+    "title": "Lokasi Ahli",
+    "description": "Lihat di mana ahli keluarga anda berada di seluruh Malaysia",
+    "viewMembers": "Lihat Ahli",
+    "noLocations": "Tiada data lokasi lagi",
+    "noLocationsDesc": "Tambah alamat semasa dan maklumat negeri kepada ahli keluarga untuk melihat mereka di peta",
+    "addLocations": "Kemaskini Ahli"
   },
   "notFound": {
     "title": "Halaman Tidak Dijumpai",

@@ -31,7 +31,7 @@ export async function GET(request: NextRequest, context: FamilyRouteContext) {
       OR: [
         { fullName: { contains: q, mode: 'insensitive' } },
         { nickname: { contains: q, mode: 'insensitive' } },
-        { kampung: { contains: q, mode: 'insensitive' } },
+        { currentAddress: { contains: q, mode: 'insensitive' } },
         { negeri: { contains: q, mode: 'insensitive' } },
         { familyBranch: { contains: q, mode: 'insensitive' } },
         { generationalTitle: { contains: q, mode: 'insensitive' } },

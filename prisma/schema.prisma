@@ -107,7 +107,7 @@ model FamilyMember {
   // ── Malaysian Cultural Fields ───────────────────────────
   binBinti          String?  // e.g., "bin Abdullah" or "binti Ahmad"
   icNumber          String?  // MyKad IC (000000-00-0000)
-  kampung           String?  // hometown/village
+  currentAddress    String?  // current address
   negeri            String?  // state (Kelantan, Selangor, etc.)
   religion          Religion @default(ISLAM)
   familyBranch      String?  // e.g., "Sebelah Ayah", "Sebelah Ibu"

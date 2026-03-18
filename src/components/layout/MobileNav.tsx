@@ -14,6 +14,7 @@ import {
   Settings,
   LogOut,
   TreePine,
+  MapPin,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { LanguageSwitcher } from './LanguageSwitcher'
@@ -90,6 +91,7 @@ export function MobileNav({ isOpen, onClose, familyId, familyName }: MobileNavPr
               {/* Gallery temporarily disabled
               <MobileNavLink href={`/family/${familyId}/gallery`} icon={Image} label={t('gallery')} active={pathname.startsWith(`/family/${familyId}/gallery`)} />
               */}
+              <MobileNavLink href={`/family/${familyId}/map`} icon={MapPin} label={t('map')} active={pathname.startsWith(`/family/${familyId}/map`)} />
               <MobileNavLink href={`/family/${familyId}/timeline`} icon={Clock} label={t('timeline')} active={pathname.startsWith(`/family/${familyId}/timeline`)} />
               <MobileNavLink href={`/family/${familyId}/settings`} icon={Settings} label={t('settings')} active={pathname.startsWith(`/family/${familyId}/settings`)} />
             </>

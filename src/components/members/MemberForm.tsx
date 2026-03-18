@@ -39,7 +39,7 @@ const schema = z.object({
   placeOfBirth: z.string().optional(),
   binBinti: z.string().optional(),
   icNumber: z.string().optional(),
-  kampung: z.string().optional(),
+  currentAddress: z.string().optional(),
   negeri: z.string().optional(),
   religion: z.string().optional(),
   familyBranch: z.string().optional(),
@@ -48,6 +48,13 @@ const schema = z.object({
   biography: z.string().optional(),
   contactEmail: z.string().email().optional().or(z.literal('')),
   contactPhone: z.string().optional(),
+}).refine((data) => {
+  // If not deceased, deathDate must be empty
+  if (!data.isDeceased && data.deathDate) return false
+  return true
+}, {
+  message: 'Date of death requires the deceased checkbox to be checked',
+  path: ['deathDate'],
 })
 
 type FormData = z.infer<typeof schema>
@@ -81,7 +88,7 @@ export function MemberForm({ familyId, member }: MemberFormProps) {
       placeOfBirth: member?.placeOfBirth ?? '',
       binBinti: member?.binBinti ?? '',
       icNumber: member?.icNumber ?? '',
-      kampung: member?.kampung ?? '',
+      currentAddress: member?.currentAddress ?? '',
       negeri: member?.negeri ?? '',
       religion: member?.religion ?? 'ISLAM',
       familyBranch: member?.familyBranch ?? '',
@@ -211,25 +218,37 @@ export function MemberForm({ familyId, member }: MemberFormProps) {
             <Input {...register('placeOfBirth')} placeholder="Kota Bharu, Kelantan" />
           </div>
 
-          {/* Death Date */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('deathDate')}
-            </label>
-            <Input type="date" {...register('deathDate')} />
-          </div>
-
           {/* Is Deceased */}
           <div className="flex items-center gap-3 mt-1">
             <input
               type="checkbox"
               id="isDeceased"
-              {...register('isDeceased')}
+              {...register('isDeceased', {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  if (!e.target.checked) {
+                    setValue('deathDate', '')
+                  }
+                },
+              })}
               className="w-5 h-5 rounded border-gray-300 text-primary-500 focus:ring-primary-500 cursor-pointer"
             />
             <label htmlFor="isDeceased" className="text-sm font-medium text-gray-700 cursor-pointer">
               {t('deceased')} (Al-Fatihah)
             </label>
+          </div>
+
+          {/* Death Date */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('deathDate')}
+            </label>
+            <Input
+              type="date"
+              {...register('deathDate')}
+              disabled={!isDeceased}
+              className={!isDeceased ? 'opacity-50 cursor-not-allowed bg-gray-50' : ''}
+            />
+            {errors.deathDate && <p className="mt-1 text-sm text-red-500">{errors.deathDate.message}</p>}
           </div>
         </div>
       </section>
@@ -278,10 +297,10 @@ export function MemberForm({ familyId, member }: MemberFormProps) {
             </Select>
           </div>
 
-          {/* Kampung */}
+          {/* Current Address */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">{t('kampung')}</label>
-            <Input {...register('kampung')} placeholder={t('kampungPlaceholder')} />
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t('currentAddress')}</label>
+            <Input {...register('currentAddress')} placeholder={t('currentAddressPlaceholder')} />
           </div>
 
           {/* Negeri */}

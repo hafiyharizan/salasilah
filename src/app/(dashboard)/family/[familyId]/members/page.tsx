@@ -30,7 +30,7 @@ export default async function MembersPage({ params, searchParams }: Props) {
     where.OR = [
       { fullName: { contains: q, mode: 'insensitive' } },
       { nickname: { contains: q, mode: 'insensitive' } },
-      { kampung: { contains: q, mode: 'insensitive' } },
+      { currentAddress: { contains: q, mode: 'insensitive' } },
       { familyBranch: { contains: q, mode: 'insensitive' } },
       { generationalTitle: { contains: q, mode: 'insensitive' } },
       { negeri: { contains: q, mode: 'insensitive' } },
@@ -59,14 +59,17 @@ export default async function MembersPage({ params, searchParams }: Props) {
 
       {/* Search */}
       <div className="relative mb-6 max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-        <form>
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+        <form method="get">
           <input
             name="q"
             defaultValue={q}
             placeholder={t('searchPlaceholder')}
             className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
           />
+          <button type="submit" className="sr-only">
+            {t('searchPlaceholder')}
+          </button>
         </form>
       </div>
 
@@ -118,8 +121,8 @@ export default async function MembersPage({ params, searchParams }: Props) {
                       {genderLabel(member.gender)}
                     </Badge>
                     {member.isDeceased && <Badge variant="muted">Al-Fatihah</Badge>}
-                    {member.kampung && (
-                      <span className="text-xs text-gray-400 truncate max-w-[100px]">📍 {member.kampung}</span>
+                    {member.currentAddress && (
+                      <span className="text-xs text-gray-400 truncate max-w-[100px]">📍 {member.currentAddress}</span>
                     )}
                   </div>
                   {member.birthDate && (

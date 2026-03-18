@@ -39,6 +39,7 @@
     "gallery": "Gallery",
     "timeline": "Timeline",
     "settings": "Settings",
+    "map": "Map",
     "signOut": "Sign Out",
     "accountSettings": "Account Settings"
   },
@@ -122,8 +123,8 @@
     "binBintiPlaceholder": "e.g. bin Abdullah or binti Ahmad",
     "icNumber": "IC Number",
     "icPlaceholder": "000000-00-0000",
-    "kampung": "Village / Hometown",
-    "kampungPlaceholder": "e.g. Kampung Baru, Kelantan",
+    "currentAddress": "Current Address",
+    "currentAddressPlaceholder": "e.g. 12 Jalan Mawar, Petaling Jaya",
     "negeri": "State",
     "religion": "Religion",
     "familyBranch": "Family Branch",
@@ -159,7 +160,7 @@
     "deceased": "Deceased",
     "alive": "Alive",
     "viewProfile": "View Profile",
-    "searchPlaceholder": "Search by name, village, branch...",
+    "searchPlaceholder": "Search by name, address, branch...",
     "noMembers": "No family members yet",
     "noMembersDesc": "Add the first member to your family",
     "memberCount": "{count} members",
@@ -186,6 +187,11 @@
     "selectMemberPlaceholder": "Select a family member...",
     "selectMemberError": "Please select a family member",
     "success": "Family relationship added!",
+    "remove": "Remove",
+    "removing": "Removing...",
+    "removeTitle": "Remove Relationship",
+    "removeConfirm": "Are you sure you want to remove this relationship?",
+    "removeSuccess": "Relationship removed!",
     "types": {
       "PARENT": "Parent",
       "CHILD": "Child",
@@ -322,7 +328,7 @@
       },
       "cultural": {
         "title": "Malaysian Cultural Features",
-        "desc": "Support for Bin/Binti names, IC numbers, Kampung, religion, family titles and more"
+        "desc": "Support for Bin/Binti names, IC numbers, addresses, religion, family titles and more"
       },
       "gallery": {
         "title": "Photo Gallery",
@@ -334,7 +340,7 @@
       },
       "search": {
         "title": "Quick Search",
-        "desc": "Find family members by name, village, branch, or title"
+        "desc": "Find family members by name, address, branch, or title"
       },
       "export": {
         "title": "Export Data",
@@ -347,7 +353,7 @@
       "items": {
         "binBinti": "Bin/Binti naming system",
         "generational": "Family titles (Tok, Wan, Pak Long, Mak Ngah...)",
-        "kampung": "Record kampung and home state",
+        "kampung": "Record current address and home state",
         "religion": "Multi-religion support",
         "ic": "IC/MyKad number",
         "branches": "Family branch management"
@@ -363,6 +369,14 @@
       "tagline": "Preserving Malaysian family heritage",
       "rights": "All rights reserved"
     }
+  },
+  "map": {
+    "title": "Member Locations",
+    "description": "See where your family members are across Malaysia",
+    "viewMembers": "View Members",
+    "noLocations": "No location data yet",
+    "noLocationsDesc": "Add current address and state (negeri) information to family members to see them on the map",
+    "addLocations": "Update Members"
   },
   "notFound": {
     "title": "Page Not Found",

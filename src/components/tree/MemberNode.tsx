@@ -1,8 +1,9 @@
 'use client'
 
-import { memo } from 'react'
+import { memo, type CSSProperties } from 'react'
 import { Handle, Position, type Node, type NodeProps } from '@xyflow/react'
 import Image from 'next/image'
+import { CalendarDays, Sparkles } from 'lucide-react'
 import { formatYear, getInitials } from '@/lib/utils'
 import type { MemberNodeData } from '@/lib/tree-utils'
 
@@ -13,76 +14,126 @@ function MemberNodeComponent({ data, selected }: NodeProps<MemberFlowNode>) {
   const initials = getInitials(member.fullName)
   const birthYear = member.birthDate ? formatYear(member.birthDate) : null
   const deathYear = member.deathDate ? formatYear(member.deathDate) : null
+  const yearsLabel = birthYear && deathYear ? `${birthYear} - ${deathYear}` : birthYear ?? deathYear
+  const branchLabel = member.familyBranch?.replace(/_/g, ' ') ?? 'Family branch'
 
   return (
     <div
-      className={`
-        relative bg-white rounded-2xl border-2 shadow-sm transition-all duration-200 cursor-pointer
-        w-[200px] overflow-hidden
-        ${selected ? 'shadow-lg ring-2 ring-offset-2' : 'hover:shadow-md hover:-translate-y-0.5'}
-      `}
+      className={[
+        'group relative w-[240px] overflow-hidden rounded-[28px] border bg-white/95 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur transition-all duration-300',
+        selected
+          ? 'border-transparent ring-4 ring-offset-4'
+          : 'border-white/70 hover:-translate-y-1 hover:shadow-[0_26px_60px_rgba(15,23,42,0.14)]',
+      ].join(' ')}
       style={{
-        borderColor: selected ? branchColor : '#E5E7EB',
-        ...(selected && { '--tw-ring-color': branchColor } as React.CSSProperties),
+        ...(selected && { '--tw-ring-color': `${branchColor}40` } as CSSProperties),
       }}
     >
-      {/* Top accent bar */}
-      <div className="h-1.5 w-full" style={{ backgroundColor: branchColor }} />
+      <div
+        className="absolute inset-x-0 top-0 h-20 opacity-90"
+        style={{
+          background: `linear-gradient(135deg, ${branchColor} 0%, ${branchColor}CC 48%, rgba(255,255,255,0.92) 100%)`,
+        }}
+      />
 
-      {/* Content */}
-      <div className="p-3 flex items-center gap-3">
-        {/* Avatar */}
-        <div
-          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0 overflow-hidden relative"
-          style={{ backgroundColor: branchColor }}
-        >
-          {member.photoUrl ? (
-            <Image
-              src={member.photoUrl}
-              alt={member.fullName}
-              fill
-              className="object-cover"
-              sizes="48px"
-            />
-          ) : (
-            <span>{initials}</span>
-          )}
-          {member.isDeceased && (
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-              <span className="text-[10px]">🤲</span>
+      <div className="relative p-4">
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <div
+              className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border-4 border-white bg-white shadow-md"
+              style={{ boxShadow: `0 14px 28px ${branchColor}26` }}
+            >
+              {member.photoUrl ? (
+                <Image
+                  src={member.photoUrl}
+                  alt={member.fullName}
+                  fill
+                  className="object-cover"
+                  sizes="64px"
+                />
+              ) : (
+                <div
+                  className="flex h-full w-full items-center justify-center text-base font-bold text-white"
+                  style={{ backgroundColor: branchColor }}
+                >
+                  {initials}
+                </div>
+              )}
+              {member.isDeceased && (
+                <div className="absolute inset-0 bg-slate-900/35" />
+              )}
             </div>
+
+            <div className="min-w-0 pt-1">
+              <div
+                className="inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em]"
+                style={{
+                  backgroundColor: `${branchColor}18`,
+                  color: branchColor,
+                }}
+              >
+                <Sparkles className="h-3 w-3" />
+                {member.generationalTitle || branchLabel}
+              </div>
+              <p className="mt-2 line-clamp-2 text-[17px] font-semibold leading-tight text-slate-900">
+                {member.fullName}
+              </p>
+            </div>
+          </div>
+
+          {member.isDeceased && (
+            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+              In memoriam
+            </span>
           )}
         </div>
 
-        {/* Info */}
-        <div className="flex-1 min-w-0">
-          {member.generationalTitle && (
-            <p className="text-[10px] font-semibold uppercase tracking-wide mb-0.5" style={{ color: branchColor }}>
-              {member.generationalTitle}
-            </p>
-          )}
-          <p className="text-sm font-semibold text-gray-900 leading-tight line-clamp-2">
-            {member.fullName}
-          </p>
+        <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-3">
           {member.binBinti && (
-            <p className="text-[10px] text-gray-400 truncate">
-              {member.gender === 'FEMALE' ? 'binti' : 'bin'} {member.binBinti}
+            <p className="text-[11px] font-medium text-slate-500">
+              {member.gender === 'FEMALE' ? 'Binti' : 'Bin'} {member.binBinti}
             </p>
           )}
-          {(birthYear || deathYear) && (
-            <p className="text-[10px] text-gray-400 mt-0.5">
-              {birthYear}
-              {deathYear && ` — ${deathYear}`}
-            </p>
+
+          {yearsLabel && (
+            <div className="mt-2 flex items-center gap-2 text-[11px] text-slate-500">
+              <CalendarDays className="h-3.5 w-3.5" />
+              <span>{yearsLabel}</span>
+            </div>
+          )}
+
+          {!member.binBinti && !yearsLabel && (
+            <p className="text-[11px] text-slate-400">Tap to view this family member</p>
           )}
         </div>
       </div>
 
-      {/* Handles */}
-      <Handle type="target" position={Position.Top} className="!w-3 !h-3 !border-2 !border-white" style={{ background: branchColor }} />
-      <Handle type="source" position={Position.Bottom} className="!w-3 !h-3 !border-2 !border-white" style={{ background: branchColor }} />
-      <Handle type="source" position={Position.Left} id="left" className="!w-3 !h-3 !border-2 !border-white" style={{ background: branchColor }} />
-      <Handle type="target" position={Position.Right} id="right" className="!w-3 !h-3 !border-2 !border-white" style={{ background: branchColor }} />
+      <Handle
+        type="target"
+        position={Position.Top}
+        className="!h-4 !w-4 !border-[3px] !border-white !shadow-sm"
+        style={{ background: branchColor, top: -8 }}
+      />
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        className="!h-4 !w-4 !border-[3px] !border-white !shadow-sm"
+        style={{ background: branchColor, bottom: -8 }}
+      />
+      <Handle
+        type="source"
+        position={Position.Left}
+        id="left"
+        className="!h-3.5 !w-3.5 !border-2 !border-white !shadow-sm"
+        style={{ background: branchColor, left: -7 }}
+      />
+      <Handle
+        type="target"
+        position={Position.Right}
+        id="right"
+        className="!h-3.5 !w-3.5 !border-2 !border-white !shadow-sm"
+        style={{ background: branchColor, right: -7 }}
+      />
     </div>
   )
 }

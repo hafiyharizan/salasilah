@@ -16,6 +16,7 @@ import {
   Heart, Baby, Users, GitBranch, BookOpen
 } from 'lucide-react'
 import AddRelationshipClient from './AddRelationshipClient'
+import RemoveRelationshipButton from './RemoveRelationshipButton'
 import { AvatarUploadProfile } from './AvatarUploadProfile'
 
 type Params = { familyId: string; memberId: string }
@@ -56,10 +57,10 @@ export default async function MemberProfilePage({ params }: PageProps) {
     orderBy: { fullName: 'asc' },
   })
 
-  const parents = member.relationshipsAsFrom.filter((r) => r.type === 'PARENT').map((r) => r.to)
-  const children = member.relationshipsAsFrom.filter((r) => r.type === 'CHILD').map((r) => r.to)
-  const spouses = member.relationshipsAsFrom.filter((r) => r.type === 'SPOUSE').map((r) => r.to)
-  const siblings = member.relationshipsAsFrom.filter((r) => r.type === 'SIBLING').map((r) => r.to)
+  const parents = member.relationshipsAsFrom.filter((r) => r.type === 'PARENT')
+  const children = member.relationshipsAsFrom.filter((r) => r.type === 'CHILD')
+  const spouses = member.relationshipsAsFrom.filter((r) => r.type === 'SPOUSE')
+  const siblings = member.relationshipsAsFrom.filter((r) => r.type === 'SIBLING')
 
   const branchColor = getBranchColor(member.familyBranch)
 
@@ -153,8 +154,8 @@ export default async function MemberProfilePage({ params }: PageProps) {
               {member.placeOfBirth && (
                 <InfoRow icon={MapPin} label={t('placeOfBirth')}>{member.placeOfBirth}</InfoRow>
               )}
-              {member.kampung && (
-                <InfoRow icon={MapPin} label={t('kampung')}>{member.kampung}</InfoRow>
+              {member.currentAddress && (
+                <InfoRow icon={MapPin} label={t('currentAddress')}>{member.currentAddress}</InfoRow>
               )}
               {member.negeri && (
                 <InfoRow icon={MapPin} label={t('negeri')}>{member.negeri}</InfoRow>
@@ -185,32 +186,36 @@ export default async function MemberProfilePage({ params }: PageProps) {
                 <RelationGroup
                   title={t('parents')}
                   icon={Users}
-                  members={parents}
+                  relationships={parents}
                   familyId={familyId}
+                  memberId={memberId}
                 />
               )}
               {spouses.length > 0 && (
                 <RelationGroup
                   title={t('spouse')}
                   icon={Heart}
-                  members={spouses}
+                  relationships={spouses}
                   familyId={familyId}
+                  memberId={memberId}
                 />
               )}
               {children.length > 0 && (
                 <RelationGroup
                   title={`${t('children')} (${children.length})`}
                   icon={Baby}
-                  members={children}
+                  relationships={children}
                   familyId={familyId}
+                  memberId={memberId}
                 />
               )}
               {siblings.length > 0 && (
                 <RelationGroup
                   title={`${t('siblings')} (${siblings.length})`}
                   icon={Users}
-                  members={siblings}
+                  relationships={siblings}
                   familyId={familyId}
+                  memberId={memberId}
                 />
               )}
             </div>
@@ -286,13 +291,15 @@ function InfoRow({
 function RelationGroup({
   title,
   icon: Icon,
-  members,
+  relationships,
   familyId,
+  memberId,
 }: {
   title: string
   icon: React.ElementType
-  members: import('@prisma/client').FamilyMember[]
+  relationships: (import('@prisma/client').Relationship & { to: import('@prisma/client').FamilyMember })[]
   familyId: string
+  memberId: string
 }) {
   return (
     <div>
@@ -301,17 +308,28 @@ function RelationGroup({
         {title}
       </h3>
       <div className="space-y-1.5">
-        {members.map((m) => (
-          <Link
-            key={m.id}
-            href={`/family/${familyId}/members/${m.id}`}
+        {relationships.map((rel) => (
+          <div
+            key={rel.id}
             className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 transition-colors group"
           >
-            <MemberAvatar name={m.fullName} photoUrl={m.photoUrl} branch={m.familyBranch} size="sm" />
-            <span className="text-sm font-medium text-gray-700 group-hover:text-primary-600 transition-colors truncate">
-              {m.fullName}
-            </span>
-          </Link>
+            <Link
+              href={`/family/${familyId}/members/${rel.to.id}`}
+              className="flex items-center gap-2 flex-1 min-w-0"
+            >
+              <MemberAvatar name={rel.to.fullName} photoUrl={rel.to.photoUrl} branch={rel.to.familyBranch} size="sm" />
+              <span className="text-sm font-medium text-gray-700 group-hover:text-primary-600 transition-colors truncate">
+                {rel.to.fullName}
+              </span>
+            </Link>
+            <RemoveRelationshipButton
+              familyId={familyId}
+              fromId={memberId}
+              toId={rel.to.id}
+              type={rel.type}
+              memberName={rel.to.fullName}
+            />
+          </div>
         ))}
       </div>
     </div>

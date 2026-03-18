@@ -12,6 +12,7 @@ import {
   Settings,
   LogOut,
   TreePine,
+  MapPin,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -72,6 +73,12 @@ export function Sidebar({ familyId, familyName }: SidebarProps) {
               active={pathname.startsWith(`/family/${familyId}/gallery`)}
             />
             */}
+            <NavLink
+              href={`/family/${familyId}/map`}
+              icon={MapPin}
+              label={t('map')}
+              active={pathname.startsWith(`/family/${familyId}/map`)}
+            />
             <NavLink
               href={`/family/${familyId}/timeline`}
               icon={Clock}
