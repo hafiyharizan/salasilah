@@ -45,7 +45,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl p-8 animate-fade-in">
+    <div className="bg-white rounded-2xl shadow-2xl shadow-black/10 p-8 animate-scale-in">
       <div className="text-center mb-8">
         <h1 className="font-display text-2xl font-bold text-primary-500 mb-2">
           {t('title')}
@@ -59,17 +59,17 @@ export default function LoginPage() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             {t('email')}
           </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="relative group">
+            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-primary-500 transition-colors" />
             <input
               type="email"
               {...register('email')}
               placeholder={t('emailPlaceholder')}
-              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-gray-50/50 focus:bg-white"
             />
           </div>
           {errors.email && (
-            <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+            <p className="mt-1.5 text-sm text-red-500">{errors.email.message}</p>
           )}
         </div>
 
@@ -78,31 +78,31 @@ export default function LoginPage() {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             {t('password')}
           </label>
-          <div className="relative">
-            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="relative group">
+            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-primary-500 transition-colors" />
             <input
               type={showPassword ? 'text' : 'password'}
               {...register('password')}
               placeholder="••••••••"
-              className="w-full pl-11 pr-12 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+              className="w-full pl-11 pr-12 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all bg-gray-50/50 focus:bg-white"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? t('hidePassword') : t('showPassword')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors p-1"
             >
               {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
             </button>
           </div>
           {errors.password && (
-            <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
+            <p className="mt-1.5 text-sm text-red-500">{errors.password.message}</p>
           )}
         </div>
 
         {/* Server Error */}
         {serverError && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-600">
+          <div className="bg-red-50 border border-red-200 rounded-xl p-3.5 text-sm text-red-600 animate-fade-in">
             {serverError}
           </div>
         )}
@@ -111,7 +111,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-xl text-base transition-all min-h-touch flex items-center justify-center gap-2 disabled:opacity-70"
+          className="w-full bg-primary-500 hover:bg-primary-600 active:scale-[0.98] text-white font-semibold py-3.5 px-6 rounded-xl text-base transition-all min-h-touch flex items-center justify-center gap-2 disabled:opacity-70 shadow-lg shadow-primary-500/20 hover:shadow-xl hover:shadow-primary-500/25"
         >
           {isSubmitting ? (
             <>
@@ -125,15 +125,15 @@ export default function LoginPage() {
       </form>
 
       {/* Demo credentials hint */}
-      <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+      <div className="mt-5 p-3.5 bg-amber-50/80 border border-amber-200/60 rounded-xl">
         <p className="text-xs text-amber-700 text-center">
-          <span className="font-medium">Demo:</span> demo@salasilah.my / demo1234
+          <span className="font-semibold">Demo:</span> demo@salasilah.my / demo1234
         </p>
       </div>
 
       <p className="text-center text-sm text-gray-500 mt-6">
         {t('noAccount')}{' '}
-        <Link href="/register" className="text-primary-500 font-semibold hover:underline">
+        <Link href="/register" className="text-primary-500 font-semibold hover:text-primary-600 transition-colors">
           {t('register')}
         </Link>
       </p>

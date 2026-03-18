@@ -25,11 +25,11 @@ export function Sidebar({ familyId, familyName }: SidebarProps) {
   const t = useTranslations('nav')
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-64 bg-primary-500 flex flex-col z-30 shadow-xl hidden lg:flex">
+    <aside className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-primary-500 to-primary-600 flex flex-col z-30 shadow-xl hidden lg:flex">
       {/* Logo */}
-      <div className="p-6 border-b border-primary-400/40">
-        <Link href="/dashboard" className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-accent rounded-lg flex items-center justify-center shrink-0">
+      <div className="p-6 border-b border-primary-400/30">
+        <Link href="/dashboard" className="flex items-center gap-3 group">
+          <div className="w-9 h-9 bg-accent rounded-lg flex items-center justify-center shrink-0 shadow-md shadow-accent/20 group-hover:scale-105 transition-transform">
             <TreePine className="w-5 h-5 text-primary-900" />
           </div>
           <div>
@@ -47,8 +47,8 @@ export function Sidebar({ familyId, familyName }: SidebarProps) {
 
         {familyId && (
           <>
-            <div className="pt-4 pb-1">
-              <p className="text-primary-300 text-xs font-semibold uppercase tracking-wider px-3">
+            <div className="pt-5 pb-2">
+              <p className="text-primary-300/80 text-[10px] font-bold uppercase tracking-[0.15em] px-3">
                 {familyName ?? 'Keluarga'}
               </p>
             </div>
@@ -64,14 +64,7 @@ export function Sidebar({ familyId, familyName }: SidebarProps) {
               label={t('members')}
               active={pathname.startsWith(`/family/${familyId}/members`)}
             />
-            {/* Gallery temporarily disabled
-            <NavLink
-              href={`/family/${familyId}/gallery`}
-              icon={Image}
-              label={t('gallery')}
-              active={pathname.startsWith(`/family/${familyId}/gallery`)}
-            />
-            */}
+            {/* Gallery temporarily disabled */}
             <NavLink
               href={`/family/${familyId}/timeline`}
               icon={Clock}
@@ -89,7 +82,7 @@ export function Sidebar({ familyId, familyName }: SidebarProps) {
       </nav>
 
       {/* Bottom */}
-      <div className="p-4 border-t border-primary-400/40 space-y-1">
+      <div className="p-4 border-t border-primary-400/30 space-y-1">
         <NavLink href="/settings" icon={Settings} label={t('accountSettings')} active={pathname === '/settings'} />
         <button
           onClick={() => signOut({ callbackUrl: '/' })}
@@ -115,13 +108,16 @@ function NavLink({ href, icon: Icon, label, active }: NavLinkProps) {
     <Link
       href={href}
       className={cn(
-        'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm font-medium',
+        'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-sm font-medium relative',
         active
-          ? 'bg-white/20 text-white'
+          ? 'bg-white/20 text-white shadow-sm'
           : 'text-primary-200 hover:bg-white/10 hover:text-white'
       )}
     >
-      <Icon className="w-5 h-5 shrink-0" />
+      {active && (
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent rounded-r-full" />
+      )}
+      <Icon className={cn('w-5 h-5 shrink-0', active && 'text-accent')} />
       <span>{label}</span>
     </Link>
   )

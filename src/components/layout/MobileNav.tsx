@@ -43,24 +43,25 @@ export function MobileNav({ isOpen, onClose, familyId, familyName }: MobileNavPr
   return (
     <>
       {/* Backdrop */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={onClose}
-        />
-      )}
+      <div
+        className={cn(
+          'fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity duration-300',
+          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        )}
+        onClick={onClose}
+      />
 
       {/* Drawer */}
       <div
         className={cn(
-          'fixed top-0 left-0 h-full w-72 bg-primary-500 z-50 flex flex-col transform transition-transform duration-300 ease-in-out lg:hidden',
+          'fixed top-0 left-0 h-full w-72 bg-gradient-to-b from-primary-500 to-primary-600 z-50 flex flex-col transform transition-transform duration-300 ease-out lg:hidden',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         {/* Header */}
-        <div className="p-5 border-b border-primary-400/40 flex items-center justify-between">
+        <div className="p-5 border-b border-primary-400/30 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-3" onClick={onClose}>
-            <div className="w-9 h-9 bg-accent rounded-lg flex items-center justify-center">
+            <div className="w-9 h-9 bg-accent rounded-lg flex items-center justify-center shadow-md shadow-accent/20">
               <TreePine className="w-5 h-5 text-primary-900" />
             </div>
             <div>
@@ -82,14 +83,12 @@ export function MobileNav({ isOpen, onClose, familyId, familyName }: MobileNavPr
 
           {familyId && (
             <>
-              <p className="text-primary-300 text-xs font-semibold uppercase tracking-wider px-3 pt-4 pb-1">
+              <p className="text-primary-300/80 text-[10px] font-bold uppercase tracking-[0.15em] px-3 pt-5 pb-2">
                 {familyName ?? 'Keluarga'}
               </p>
               <MobileNavLink href={`/family/${familyId}`} icon={GitBranch} label={t('familyTree')} active={pathname === `/family/${familyId}`} />
               <MobileNavLink href={`/family/${familyId}/members`} icon={Users} label={t('members')} active={pathname.startsWith(`/family/${familyId}/members`)} />
-              {/* Gallery temporarily disabled
-              <MobileNavLink href={`/family/${familyId}/gallery`} icon={Image} label={t('gallery')} active={pathname.startsWith(`/family/${familyId}/gallery`)} />
-              */}
+              {/* Gallery temporarily disabled */}
               <MobileNavLink href={`/family/${familyId}/timeline`} icon={Clock} label={t('timeline')} active={pathname.startsWith(`/family/${familyId}/timeline`)} />
               <MobileNavLink href={`/family/${familyId}/settings`} icon={Settings} label={t('settings')} active={pathname.startsWith(`/family/${familyId}/settings`)} />
             </>
@@ -97,7 +96,7 @@ export function MobileNav({ isOpen, onClose, familyId, familyName }: MobileNavPr
         </nav>
 
         {/* Bottom */}
-        <div className="p-4 border-t border-primary-400/40 space-y-2">
+        <div className="p-4 border-t border-primary-400/30 space-y-2">
           <div className="px-3">
             <LanguageSwitcher />
           </div>
@@ -120,11 +119,14 @@ function MobileNavLink({ href, icon: Icon, label, active }: { href: string; icon
     <Link
       href={href}
       className={cn(
-        'flex items-center gap-3 px-3 py-3 rounded-xl transition-all text-sm font-medium',
-        active ? 'bg-white/20 text-white' : 'text-primary-200 hover:bg-white/10 hover:text-white'
+        'flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 text-sm font-medium relative',
+        active ? 'bg-white/20 text-white shadow-sm' : 'text-primary-200 hover:bg-white/10 hover:text-white'
       )}
     >
-      <Icon className="w-5 h-5 shrink-0" />
+      {active && (
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-accent rounded-r-full" />
+      )}
+      <Icon className={cn('w-5 h-5 shrink-0', active && 'text-accent')} />
       <span>{label}</span>
     </Link>
   )

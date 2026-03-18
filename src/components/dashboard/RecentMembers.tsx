@@ -3,6 +3,7 @@ import { Users, ArrowRight } from 'lucide-react'
 import type { FamilyMember } from '@prisma/client'
 import { getTranslations } from 'next-intl/server'
 import { MemberAvatar } from '@/components/shared/Avatar'
+import { EmptyMembersIllustration } from '@/components/shared/EmptyStateIllustration'
 import { formatDateMY, genderLabel } from '@/lib/utils'
 
 interface RecentMembersProps {
@@ -23,21 +24,24 @@ export async function RecentMembers({ members, familyId }: RecentMembersProps) {
         </h2>
         <Link
           href={`/family/${familyId}/members`}
-          className="text-xs text-primary-500 font-medium hover:underline flex items-center gap-1"
+          className="text-xs text-primary-500 font-medium hover:text-primary-600 flex items-center gap-1 transition-colors"
         >
           {tMember('viewProfile')} <ArrowRight className="w-3 h-3" />
         </Link>
       </div>
 
       {members.length === 0 ? (
-        <p className="text-sm text-gray-400 text-center py-6">{tMember('noMembers')}</p>
+        <div className="flex flex-col items-center py-4">
+          <EmptyMembersIllustration className="w-28 h-28 mb-3" />
+          <p className="text-sm text-gray-400 text-center">{tMember('noMembers')}</p>
+        </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-1">
           {members.slice(0, 6).map((member) => (
             <Link
               key={member.id}
               href={`/family/${familyId}/members/${member.id}`}
-              className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group"
+              className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-all duration-200 group"
             >
               <MemberAvatar
                 name={member.fullName}

@@ -3,6 +3,7 @@ import { Cake } from 'lucide-react'
 import type { FamilyMember } from '@prisma/client'
 import { getTranslations } from 'next-intl/server'
 import { MemberAvatar } from '@/components/shared/Avatar'
+import { NoBirthdaysIllustration } from '@/components/shared/EmptyStateIllustration'
 import { daysUntilBirthday, formatDateMY } from '@/lib/utils'
 
 interface BirthdayWidgetProps {
@@ -33,9 +34,12 @@ export async function BirthdayWidget({ members, familyId }: BirthdayWidgetProps)
           <Cake className="w-5 h-5 text-accent" />
           {t('title')}
         </h2>
-        <p className="text-sm text-gray-400 text-center py-6">
-          {t('noBirthdays')}
-        </p>
+        <div className="flex flex-col items-center py-4">
+          <NoBirthdaysIllustration className="w-24 h-24 mb-3" />
+          <p className="text-sm text-gray-400 text-center">
+            {t('noBirthdays')}
+          </p>
+        </div>
       </div>
     )
   }
@@ -46,12 +50,12 @@ export async function BirthdayWidget({ members, familyId }: BirthdayWidgetProps)
         <Cake className="w-5 h-5 text-accent" />
         {t('title')}
       </h2>
-      <div className="space-y-3">
+      <div className="space-y-2">
         {upcoming.map(({ member, days }) => (
           <Link
             key={member.id}
             href={`/family/${familyId}/members/${member.id}`}
-            className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors group"
+            className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-all duration-200 group"
           >
             <MemberAvatar name={member.fullName} photoUrl={member.photoUrl} branch={member.familyBranch} size="md" />
             <div className="flex-1 min-w-0">
@@ -60,9 +64,9 @@ export async function BirthdayWidget({ members, familyId }: BirthdayWidgetProps)
               </p>
               <p className="text-xs text-gray-400">{formatDateMY(member.birthDate)}</p>
             </div>
-            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${
+            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full whitespace-nowrap transition-colors ${
               days === 0
-                ? 'bg-accent/20 text-amber-700'
+                ? 'bg-accent/20 text-amber-700 shadow-sm shadow-accent/10'
                 : days <= 3
                 ? 'bg-primary-100 text-primary-700'
                 : 'bg-gray-100 text-gray-600'

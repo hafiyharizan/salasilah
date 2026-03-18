@@ -1,4 +1,7 @@
+'use client'
+
 import { cn } from '@/lib/utils'
+import { motion } from 'framer-motion'
 
 interface PageHeaderProps {
   title: string
@@ -9,12 +12,17 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, description, action, className }: PageHeaderProps) {
   return (
-    <div className={cn('flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8', className)}>
+    <motion.div
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={cn('flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8', className)}
+    >
       <div>
         <h1 className="font-display text-2xl sm:text-3xl font-bold text-gray-900">{title}</h1>
         {description && <p className="text-gray-500 mt-1 text-sm sm:text-base">{description}</p>}
       </div>
       {action && <div className="shrink-0">{action}</div>}
-    </div>
+    </motion.div>
   )
 }

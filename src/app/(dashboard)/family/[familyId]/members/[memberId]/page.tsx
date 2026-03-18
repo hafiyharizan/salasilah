@@ -64,10 +64,16 @@ export default async function MemberProfilePage({ params }: PageProps) {
   const branchColor = getBranchColor(member.familyBranch)
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
       {/* Profile Header */}
-      <div className="card overflow-hidden">
-        <div className="h-32 sm:h-40" style={{ background: `linear-gradient(135deg, ${branchColor}, ${branchColor}99)` }} />
+      <div className="card overflow-hidden shadow-md">
+        <div className="h-32 sm:h-40 relative" style={{ background: `linear-gradient(135deg, ${branchColor}, ${branchColor}bb, ${branchColor}66)` }}>
+          {/* Subtle decorative pattern overlay */}
+          <div className="absolute inset-0 opacity-[0.06]" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='0.5'%3E%3Cpath d='M20 0L40 20L20 40L0 20Z'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: '40px 40px',
+          }} />
+        </div>
 
         <div className="px-6 pb-6">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 -mt-10 sm:-mt-12">

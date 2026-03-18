@@ -8,6 +8,7 @@ import { StatsCard } from '@/components/dashboard/StatsCard'
 import { BirthdayWidget } from '@/components/dashboard/BirthdayWidget'
 import { RecentMembers } from '@/components/dashboard/RecentMembers'
 import { ActivityFeed } from '@/components/dashboard/ActivityFeed'
+import { OnboardingIllustration } from '@/components/shared/EmptyStateIllustration'
 import { Button } from '@/components/ui/button'
 import { Plus, Users, GitBranch, Layers, Cake, TreePine } from 'lucide-react'
 
@@ -54,14 +55,12 @@ export default async function DashboardPage() {
   // If no family yet, show onboarding
   if (families.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[70vh] text-center">
-        <div className="w-20 h-20 bg-primary-50 rounded-2xl flex items-center justify-center mb-6">
-          <TreePine className="w-10 h-10 text-primary-500" />
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-[70vh] text-center animate-fade-in-up">
+        <OnboardingIllustration className="w-48 h-48 mb-6" />
         <h1 className="font-display text-3xl font-bold text-gray-900 mb-3">
           {t('noFamily.title')}
         </h1>
-        <p className="text-gray-500 max-w-sm mb-8">
+        <p className="text-gray-500 max-w-sm mb-8 leading-relaxed">
           {t('noFamily.desc')}
         </p>
         <CreateFamilyForm
@@ -111,6 +110,7 @@ export default async function DashboardPage() {
           icon={Users}
           color="green"
           subtitle={t('statsSubtitle.totalMembers')}
+          index={0}
         />
         <StatsCard
           title={t('stats.generations')}
@@ -118,6 +118,7 @@ export default async function DashboardPage() {
           icon={Layers}
           color="blue"
           subtitle={t('statsSubtitle.generations')}
+          index={1}
         />
         <StatsCard
           title={t('stats.branches')}
@@ -125,6 +126,7 @@ export default async function DashboardPage() {
           icon={GitBranch}
           color="gold"
           subtitle={t('statsSubtitle.branches')}
+          index={2}
         />
         <StatsCard
           title={t('stats.upcomingBirthdays')}
@@ -132,22 +134,23 @@ export default async function DashboardPage() {
           icon={Cake}
           color="purple"
           subtitle={t('statsSubtitle.upcomingBirthdays')}
+          index={3}
         />
       </div>
 
       {/* Quick access to family tree */}
-      <div className="card p-4 mb-8 flex items-center justify-between bg-gradient-to-r from-primary-500 to-primary-600 border-0">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+      <div className="card p-5 mb-8 flex items-center justify-between bg-gradient-to-r from-primary-500 via-primary-600 to-primary-500 border-0 shadow-lg shadow-primary-500/10 animate-fade-in">
+        <div className="flex items-center gap-4">
+          <div className="w-11 h-11 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
             <GitBranch className="w-5 h-5 text-white" />
           </div>
           <div>
             <p className="text-white font-semibold">{t('viewTree')}</p>
-            <p className="text-primary-200 text-xs">{t('viewTreeDesc')}</p>
+            <p className="text-primary-200 text-sm">{t('viewTreeDesc')}</p>
           </div>
         </div>
         <Link href={`/family/${primaryFamily.id}`}>
-          <Button variant="outline" size="sm" className="bg-white text-primary-600 border-white hover:bg-white/90">
+          <Button variant="outline" size="sm" className="bg-white text-primary-600 border-white hover:bg-white/90 shadow-sm">
             {t('viewTree')}
           </Button>
         </Link>

@@ -6,6 +6,7 @@ import { prisma } from '@/lib/prisma'
 import { PageHeader } from '@/components/shared/PageHeader'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { MemberAvatar } from '@/components/shared/Avatar'
+import { EmptyMembersIllustration, EmptySearchIllustration } from '@/components/shared/EmptyStateIllustration'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Plus, Users, Search } from 'lucide-react'
@@ -59,26 +60,26 @@ export default async function MembersPage({ params, searchParams }: Props) {
 
       {/* Search */}
       <div className="relative mb-6 max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
         <form>
           <input
             name="q"
             defaultValue={q}
             placeholder={t('searchPlaceholder')}
-            className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white"
+            className="w-full pl-11 pr-4 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white transition-all"
           />
         </form>
       </div>
 
       {members.length === 0 ? (
         <EmptyState
-          icon={Users}
           title={q ? `${t('noMembers')} "${q}"` : t('noMembers')}
           description={t('noMembersDesc')}
+          illustration={q ? <EmptySearchIllustration /> : <EmptyMembersIllustration />}
           action={
             !q ? (
               <Link href={`/family/${familyId}/members/new`}>
-                <Button>
+                <Button className="shadow-md shadow-primary-500/20">
                   <Plus className="w-4 h-4" />
                   {t('addMember')}
                 </Button>
@@ -88,11 +89,12 @@ export default async function MembersPage({ params, searchParams }: Props) {
         />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {members.map((member) => (
+          {members.map((member, i) => (
             <Link
               key={member.id}
               href={`/family/${familyId}/members/${member.id}`}
-              className="card p-5 hover:shadow-md transition-all hover:-translate-y-0.5 group"
+              className="card p-5 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group animate-fade-in-up"
+              style={{ animationDelay: `${Math.min(i * 50, 300)}ms`, animationFillMode: 'both' }}
             >
               <div className="flex items-start gap-4">
                 <MemberAvatar
@@ -103,7 +105,7 @@ export default async function MembersPage({ params, searchParams }: Props) {
                 />
                 <div className="flex-1 min-w-0">
                   {member.generationalTitle && (
-                    <span className="text-xs text-primary-500 font-medium">{member.generationalTitle}</span>
+                    <span className="text-xs text-primary-500 font-semibold">{member.generationalTitle}</span>
                   )}
                   <h3 className="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors truncate">
                     {member.fullName}
@@ -119,11 +121,13 @@ export default async function MembersPage({ params, searchParams }: Props) {
                     </Badge>
                     {member.isDeceased && <Badge variant="muted">Al-Fatihah</Badge>}
                     {member.kampung && (
-                      <span className="text-xs text-gray-400 truncate max-w-[100px]">📍 {member.kampung}</span>
+                      <span className="text-xs text-gray-400 truncate max-w-[100px] flex items-center gap-0.5">
+                        <span className="text-[10px]">📍</span> {member.kampung}
+                      </span>
                     )}
                   </div>
                   {member.birthDate && (
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="text-xs text-gray-400 mt-1.5">
                       {formatDateMY(member.birthDate)}
                       {!member.isDeceased && ` · ${getAge(member.birthDate)}`}
                     </p>

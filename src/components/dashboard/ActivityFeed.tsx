@@ -27,6 +27,7 @@ export async function ActivityFeed({ members }: ActivityFeedProps) {
       return {
         member: m,
         action: isNew ? t('added') : t('updated'),
+        isNew,
         time: m.updatedAt,
       }
     })
@@ -42,18 +43,21 @@ export async function ActivityFeed({ members }: ActivityFeedProps) {
         <p className="text-sm text-gray-400 text-center py-6">{t('noActivity')}</p>
       ) : (
         <div className="space-y-3">
-          {activities.map(({ member, action, time }) => (
-            <div key={member.id} className="flex items-start gap-3">
-              <MemberAvatar
-                name={member.fullName}
-                photoUrl={member.photoUrl}
-                branch={member.familyBranch}
-                size="sm"
-              />
-              <div className="flex-1 min-w-0">
+          {activities.map(({ member, action, isNew, time }) => (
+            <div key={member.id} className="flex items-start gap-3 group">
+              {/* Timeline dot */}
+              <div className="flex flex-col items-center pt-1">
+                <MemberAvatar
+                  name={member.fullName}
+                  photoUrl={member.photoUrl}
+                  branch={member.familyBranch}
+                  size="sm"
+                />
+              </div>
+              <div className="flex-1 min-w-0 pb-3 border-b border-gray-50 last:border-0">
                 <p className="text-sm text-gray-800">
                   <span className="font-semibold">{member.fullName}</span>{' '}
-                  <span className="text-gray-500">{action}</span>
+                  <span className={isNew ? 'text-primary-500 font-medium' : 'text-gray-500'}>{action}</span>
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">
                   {formatDistanceToNow(new Date(time), { addSuffix: true, locale: dateLocale })}
