@@ -1,0 +1,397 @@
+{
+  "common": {
+    "save": "Simpan",
+    "cancel": "Batal",
+    "delete": "Padam",
+    "edit": "Edit",
+    "add": "Tambah",
+    "close": "Tutup",
+    "back": "Kembali",
+    "next": "Seterusnya",
+    "loading": "Memuatkan...",
+    "saving": "Menyimpan...",
+    "deleting": "Memadam...",
+    "search": "Cari",
+    "searchPlaceholder": "Cari...",
+    "noResults": "Tiada keputusan",
+    "viewAll": "Lihat semua",
+    "required": "Diperlukan",
+    "optional": "Pilihan",
+    "yes": "Ya",
+    "no": "Tidak",
+    "or": "atau",
+    "and": "dan",
+    "error": "Ralat berlaku",
+    "success": "Berjaya",
+    "copy": "Salin",
+    "copied": "Disalin!",
+    "upload": "Muat naik",
+    "uploading": "Memuat naik...",
+    "generate": "Jana",
+    "confirm": "Sahkan",
+    "male": "Lelaki",
+    "female": "Perempuan"
+  },
+  "nav": {
+    "dashboard": "Papan Pemuka",
+    "familyTree": "Pokok Keluarga",
+    "members": "Ahli Keluarga",
+    "gallery": "Galeri",
+    "timeline": "Linimasa",
+    "settings": "Tetapan",
+    "signOut": "Log Keluar",
+    "accountSettings": "Tetapan Akaun"
+  },
+  "auth": {
+    "login": {
+      "title": "Selamat Kembali",
+      "subtitle": "Log masuk ke akaun Salasilah anda",
+      "email": "Alamat E-mel",
+      "emailPlaceholder": "nama@contoh.com",
+      "password": "Kata Laluan",
+      "passwordPlaceholder": "Kata laluan anda",
+      "submit": "Log Masuk",
+      "submitting": "Sedang log masuk...",
+      "noAccount": "Belum ada akaun?",
+      "register": "Daftar sekarang",
+      "demoHint": "Demo: demo@salasilah.my / demo1234",
+      "errorInvalid": "E-mel atau kata laluan tidak sah",
+      "showPassword": "Tunjuk kata laluan",
+      "hidePassword": "Sembunyikan kata laluan"
+    },
+    "register": {
+      "title": "Cipta Akaun",
+      "subtitle": "Mulakan perjalanan warisan keluarga anda",
+      "name": "Nama Penuh",
+      "namePlaceholder": "Nama penuh anda",
+      "email": "Alamat E-mel",
+      "emailPlaceholder": "nama@contoh.com",
+      "password": "Kata Laluan",
+      "passwordPlaceholder": "Sekurang-kurangnya 8 aksara",
+      "submit": "Daftar",
+      "submitting": "Sedang mendaftar...",
+      "hasAccount": "Sudah ada akaun?",
+      "login": "Log masuk",
+      "errorEmailTaken": "E-mel ini sudah didaftarkan",
+      "successRedirect": "Akaun dicipta! Sedang log masuk...",
+      "terms": "Dengan mendaftar, anda bersetuju dengan Terma Perkhidmatan kami"
+    },
+    "tagline": "Salasilah Keluarga Anda"
+  },
+  "dashboard": {
+    "title": "Papan Pemuka",
+    "welcome": "Selamat Datang",
+    "stats": {
+      "totalMembers": "Jumlah Ahli",
+      "generations": "Generasi",
+      "branches": "Cawangan",
+      "upcomingBirthdays": "Hari Lahir Akan Datang"
+    },
+    "statsSubtitle": {
+      "totalMembers": "dalam pokok keluarga",
+      "generations": "kedalaman keturunan",
+      "branches": "cawangan keluarga",
+      "upcomingBirthdays": "dalam 30 hari"
+    },
+    "viewTree": "Lihat Pokok Keluarga",
+    "viewTreeDesc": "Terokai hubungan keluarga anda secara visual",
+    "recentMembers": "Ahli Terbaru",
+    "activityFeed": "Aktiviti Terbaru",
+    "noActivity": "Belum ada aktiviti",
+    "added": "ditambah",
+    "updated": "dikemaskini",
+    "noFamily": {
+      "title": "Selamat Datang ke Salasilah",
+      "desc": "Mulakan dengan mencipta keluarga pertama anda",
+      "familyNameLabel": "Nama Keluarga",
+      "familyNamePlaceholder": "cth: Keluarga Ahmad",
+      "descriptionLabel": "Penerangan (Pilihan)",
+      "descriptionPlaceholder": "Ceritakan sedikit tentang keluarga anda...",
+      "createButton": "Cipta Keluarga",
+      "creating": "Sedang mencipta..."
+    }
+  },
+  "member": {
+    "fullName": "Nama Penuh",
+    "nickname": "Nama Panggilan",
+    "gender": "Jantina",
+    "birthDate": "Tarikh Lahir",
+    "deathDate": "Tarikh Kematian",
+    "placeOfBirth": "Tempat Lahir",
+    "binBinti": "Bin / Binti",
+    "binBintiPlaceholder": "cth: bin Abdullah @ binti Ahmad",
+    "icNumber": "Nombor IC",
+    "icPlaceholder": "000000-00-0000",
+    "kampung": "Kampung / Tempat Asal",
+    "kampungPlaceholder": "cth: Kampung Baru, Kelantan",
+    "negeri": "Negeri",
+    "religion": "Agama",
+    "familyBranch": "Cawangan Keluarga",
+    "familyBranchPlaceholder": "cth: Sebelah Ayah",
+    "generationalTitle": "Gelaran Kekeluargaan",
+    "occupation": "Pekerjaan",
+    "occupationPlaceholder": "cth: Guru, Doktor, Pesawah",
+    "biography": "Biografi",
+    "biographyPlaceholder": "Cerita hidup, sumbangan, kenangan...",
+    "contactEmail": "E-mel",
+    "emailPlaceholder": "nama@contoh.com",
+    "contactPhone": "No. Telefon",
+    "photo": "Gambar Profil",
+    "addMember": "Tambah Ahli",
+    "editMember": "Edit Ahli",
+    "deleteMember": "Padam Ahli",
+    "deleteConfirm": "Adakah anda pasti mahu memadam ahli ini? Tindakan ini tidak boleh dibuat asal.",
+    "saving": "Menyimpan...",
+    "saveChanges": "Simpan Perubahan",
+    "addNew": "Tambah Ahli Baru",
+    "addNewDesc": "Tambah ahli baru ke keluarga {family}",
+    "unit": "ahli",
+    "personalInfo": "Maklumat Peribadi",
+    "culturalInfo": "Maklumat Kebudayaan",
+    "additionalInfo": "Maklumat Tambahan",
+    "relationships": "Hubungan Keluarga",
+    "parents": "Ibu Bapa",
+    "children": "Anak-anak",
+    "spouse": "Pasangan",
+    "siblings": "Adik-beradik",
+    "noRelationships": "Belum ada hubungan",
+    "age": "Umur",
+    "deceased": "Telah Meninggal",
+    "alive": "Masih Hidup",
+    "viewProfile": "Lihat Profil",
+    "searchPlaceholder": "Cari nama, kampung, cawangan...",
+    "noMembers": "Belum ada ahli keluarga",
+    "noMembersDesc": "Tambah ahli pertama keluarga anda",
+    "memberCount": "{count} ahli",
+    "membersTitle": "Ahli Keluarga",
+    "selectTitle": "Pilih gelaran...",
+    "selectNegeri": "Pilih negeri...",
+    "none": "— Tiada —",
+    "sections": {
+      "basicInfo": "Maklumat Asas",
+      "malaysianFields": "Maklumat Kebudayaan Malaysia",
+      "additional": "Maklumat Tambahan"
+    }
+  },
+  "relationship": {
+    "add": "Tambah Hubungan",
+    "adding": "Menambah...",
+    "title": "Tambah Hubungan Keluarga",
+    "type": "Jenis Hubungan",
+    "selectMember": "Pilih Ahli",
+    "selectMemberPlaceholder": "Pilih ahli keluarga...",
+    "selectMemberError": "Sila pilih ahli keluarga",
+    "success": "Hubungan keluarga ditambah!",
+    "types": {
+      "PARENT": "Ibu Bapa",
+      "CHILD": "Anak",
+      "SPOUSE": "Pasangan",
+      "SIBLING": "Adik-beradik"
+    }
+  },
+  "tree": {
+    "title": "Pokok Keluarga",
+    "loading": "Memuatkan pokok keluarga...",
+    "empty": "Pokok keluarga masih kosong",
+    "emptyDesc": "Tambah ahli keluarga pertama untuk memulakan salasilah anda",
+    "addMember": "Tambah Ahli",
+    "addFirstMember": "Tambah Ahli Pertama",
+    "errorTitle": "Ralat",
+    "errorLoad": "Gagal memuatkan pokok keluarga",
+    "fitView": "Suaikan Paparan",
+    "zoomIn": "Zum Masuk",
+    "zoomOut": "Zum Keluar",
+    "minimap": "Peta Mini",
+    "born": "L:",
+    "died": "M:",
+    "deceased": "Al-Fatihah"
+  },
+  "gallery": {
+    "title": "Galeri Gambar",
+    "upload": "Muat Naik Gambar",
+    "uploading": "Memuat naik...",
+    "noPhotos": "Belum ada gambar",
+    "noPhotosDesc": "Muat naik gambar keluarga untuk mula membina galeri",
+    "caption": "Kapsyen",
+    "captionPlaceholder": "Ceritakan tentang gambar ini...",
+    "takenAt": "Tarikh Gambar",
+    "tagMember": "Tag Ahli",
+    "tagMemberPlaceholder": "Pilih ahli (pilihan)...",
+    "category": "Kategori",
+    "categories": {
+      "FAMILY": "Keluarga",
+      "WEDDING": "Perkahwinan",
+      "ANCESTRAL": "Warisan",
+      "CHILDHOOD": "Zaman Kecil",
+      "OTHERS": "Lain-lain"
+    },
+    "uploadSuccess": "Gambar berjaya dimuat naik!",
+    "uploadError": "Gagal memuat naik gambar"
+  },
+  "timeline": {
+    "title": "Linimasa Keluarga",
+    "noEvents": "Belum ada peristiwa",
+    "noEventsDesc": "Tambah tarikh lahir dan kematian ahli untuk melihat linimasa",
+    "born": "Dilahirkan",
+    "died": "Meninggal Dunia",
+    "decade": "an"
+  },
+  "settings": {
+    "family": {
+      "title": "Tetapan Keluarga",
+      "name": "Nama Keluarga",
+      "namePlaceholder": "Nama keluarga anda",
+      "description": "Penerangan",
+      "descriptionPlaceholder": "Penerangan keluarga...",
+      "saveChanges": "Simpan Perubahan",
+      "saving": "Menyimpan...",
+      "saveSuccess": "Tetapan keluarga dikemaskini!",
+      "saveError": "Gagal menyimpan tetapan",
+      "shareLink": "Pautan Kongsi",
+      "shareLinkDesc": "Kongsi pautan ini untuk memberi akses kepada ahli keluarga",
+      "copyLink": "Salin Pautan",
+      "linkCopied": "Pautan disalin!",
+      "invites": "Jemput Ahli",
+      "inviteEmail": "Alamat E-mel",
+      "inviteEmailPlaceholder": "email@contoh.com",
+      "inviteRole": "Peranan",
+      "inviteButton": "Hantar Jemputan",
+      "inviting": "Menghantar...",
+      "inviteSuccess": "Jemputan dihantar!",
+      "inviteError": "Gagal menghantar jemputan",
+      "pendingInvites": "Jemputan Menunggu",
+      "noInvites": "Tiada jemputan menunggu",
+      "inviteExpires": "Tamat",
+      "inviteExpiresDesc": "Pautan jemputan tamat dalam 7 hari.",
+      "revokeInvite": "Tarik Balik",
+      "roles": {
+        "OWNER": "Pemilik",
+        "EDITOR": "Editor",
+        "VIEWER": "Penonton"
+      },
+      "dangerZone": "Zon Bahaya",
+      "deleteFamily": "Padam Keluarga",
+      "deleteFamilyDesc": "Tindakan ini akan memadam semua data keluarga secara kekal",
+      "statusAccepted": "Diterima",
+      "statusPending": "Menunggu",
+      "statusExpired": "Tamat"
+    },
+    "account": {
+      "title": "Tetapan Akaun",
+      "profile": "Profil",
+      "name": "Nama",
+      "email": "E-mel",
+      "language": "Bahasa",
+      "languageDesc": "Pilih bahasa paparan",
+      "security": "Keselamatan",
+      "securityNote": "Untuk menukar kata laluan, sila hubungi sokongan",
+      "saveChanges": "Simpan Perubahan",
+      "saving": "Menyimpan...",
+      "saveSuccess": "Profil dikemaskini!",
+      "languages": {
+        "ms": "Bahasa Melayu",
+        "en": "English"
+      }
+    }
+  },
+  "landing": {
+    "nav": {
+      "features": "Ciri-ciri",
+      "about": "Tentang",
+      "login": "Log Masuk",
+      "getStarted": "Mulakan"
+    },
+    "hero": {
+      "badge": "Platform Salasilah Keluarga Malaysia",
+      "title": "Rakam Warisan Keluarga Anda",
+      "titleHighlight": "Untuk Generasi Akan Datang",
+      "subtitle": "Platform moden untuk mendokumentasikan, menggambarkan, dan berkongsi salasilah keluarga anda. Direka khas untuk keluarga Malaysia.",
+      "getStarted": "Mulakan Percuma",
+      "viewDemo": "Lihat Demo"
+    },
+    "features": {
+      "title": "Semua yang Anda Perlukan",
+      "subtitle": "Direka khas untuk keluarga Malaysia dengan ciri-ciri yang memahami budaya dan tradisi kita",
+      "tree": {
+        "title": "Pokok Keluarga Visual",
+        "desc": "Gambarkan hubungan keluarga dengan pokok interaktif yang boleh dibesarkan dan digerakkan"
+      },
+      "cultural": {
+        "title": "Ciri Budaya Malaysia",
+        "desc": "Sokong nama Bin/Binti, IC, Kampung, agama, gelaran kekeluargaan dan banyak lagi"
+      },
+      "gallery": {
+        "title": "Galeri Gambar",
+        "desc": "Simpan dan kongsi gambar keluarga dengan selamat dalam satu tempat"
+      },
+      "collaborate": {
+        "title": "Kerjasama Keluarga",
+        "desc": "Jemput ahli keluarga untuk menyumbang dan mengemas kini maklumat bersama"
+      },
+      "search": {
+        "title": "Carian Pantas",
+        "desc": "Cari ahli keluarga mengikut nama, kampung, cawangan atau gelaran"
+      },
+      "export": {
+        "title": "Eksport Data",
+        "desc": "Eksport senarai ahli keluarga sebagai CSV untuk simpanan peribadi"
+      }
+    },
+    "cultural": {
+      "title": "Dibina Untuk Keluarga Malaysia",
+      "subtitle": "Kami faham keunikan budaya penamaan dan tradisi keluarga Malaysia",
+      "items": {
+        "binBinti": "Sistem penamaan Bin/Binti",
+        "generational": "Gelaran kekeluargaan (Tok, Wan, Pak Long, Mak Ngah...)",
+        "kampung": "Rekod kampung dan negeri asal",
+        "religion": "Sokongan pelbagai agama",
+        "ic": "Nombor IC/MyKad",
+        "branches": "Pengurusan cawangan keluarga"
+      }
+    },
+    "cta": {
+      "title": "Mulakan Perjalanan Anda Hari Ini",
+      "subtitle": "Bergabung dengan keluarga-keluarga Malaysia yang menggunakan Salasilah untuk menyimpan warisan mereka",
+      "button": "Cipta Akaun Percuma",
+      "demo": "Cuba Demo"
+    },
+    "footer": {
+      "tagline": "Merakam warisan keluarga Malaysia",
+      "rights": "Hak cipta terpelihara"
+    }
+  },
+  "notFound": {
+    "title": "Halaman Tidak Dijumpai",
+    "desc": "Halaman yang anda cari tidak wujud atau telah dialihkan.",
+    "backHome": "Kembali ke Laman Utama"
+  },
+  "birthday": {
+    "title": "Hari Lahir Akan Datang",
+    "noBirthdays": "Tiada hari lahir dalam 30 hari akan datang",
+    "today": "Hari ini!",
+    "tomorrow": "Esok",
+    "daysLeft": "{days} hari lagi"
+  },
+  "photo": {
+    "uploadPhoto": "Muat Naik Gambar",
+    "dragOrClick": "Seret gambar atau klik untuk memilih",
+    "maxSize": "Saiz maksimum: 5MB (JPG, PNG, WebP)",
+    "changePhoto": "Tukar Gambar",
+    "removePhoto": "Buang Gambar",
+    "clickToUpload": "Klik untuk muat naik",
+    "invalidType": "Sila pilih fail imej",
+    "tooLarge": "Saiz fail terlalu besar (had: 5MB)",
+    "uploadSuccess": "Foto berjaya dimuat naik",
+    "uploadFailed": "Muat naik gagal"
+  },
+  "errors": {
+    "required": "Medan ini diperlukan",
+    "invalidEmail": "E-mel tidak sah",
+    "minPassword": "Kata laluan sekurang-kurangnya 8 aksara",
+    "minName": "Nama sekurang-kurangnya 2 aksara",
+    "generic": "Ralat berlaku. Sila cuba lagi.",
+    "unauthorized": "Anda tidak mempunyai akses",
+    "notFound": "Rekod tidak dijumpai",
+    "familyRequired": "Nama keluarga diperlukan"
+  }
+}

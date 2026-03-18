@@ -1,0 +1,397 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "search": "Search",
+    "searchPlaceholder": "Search...",
+    "noResults": "No results found",
+    "viewAll": "View all",
+    "required": "Required",
+    "optional": "Optional",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or",
+    "and": "and",
+    "error": "An error occurred",
+    "success": "Success",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "upload": "Upload",
+    "uploading": "Uploading...",
+    "generate": "Generate",
+    "confirm": "Confirm",
+    "male": "Male",
+    "female": "Female"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "familyTree": "Family Tree",
+    "members": "Family Members",
+    "gallery": "Gallery",
+    "timeline": "Timeline",
+    "settings": "Settings",
+    "signOut": "Sign Out",
+    "accountSettings": "Account Settings"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your Salasilah account",
+      "email": "Email Address",
+      "emailPlaceholder": "name@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "Your password",
+      "submit": "Sign In",
+      "submitting": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "register": "Register now",
+      "demoHint": "Demo: demo@salasilah.my / demo1234",
+      "errorInvalid": "Invalid email or password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Start your family heritage journey",
+      "name": "Full Name",
+      "namePlaceholder": "Your full name",
+      "email": "Email Address",
+      "emailPlaceholder": "name@example.com",
+      "password": "Password",
+      "passwordPlaceholder": "At least 8 characters",
+      "submit": "Register",
+      "submitting": "Registering...",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "errorEmailTaken": "This email is already registered",
+      "successRedirect": "Account created! Signing in...",
+      "terms": "By registering, you agree to our Terms of Service"
+    },
+    "tagline": "Your Family Tree"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome",
+    "stats": {
+      "totalMembers": "Total Members",
+      "generations": "Generations",
+      "branches": "Branches",
+      "upcomingBirthdays": "Upcoming Birthdays"
+    },
+    "statsSubtitle": {
+      "totalMembers": "in the family tree",
+      "generations": "depth of lineage",
+      "branches": "family branches",
+      "upcomingBirthdays": "within 30 days"
+    },
+    "viewTree": "View Family Tree",
+    "viewTreeDesc": "Explore your family relationships visually",
+    "recentMembers": "Recent Members",
+    "activityFeed": "Recent Activity",
+    "noActivity": "No activity yet",
+    "added": "added",
+    "updated": "updated",
+    "noFamily": {
+      "title": "Welcome to Salasilah",
+      "desc": "Start by creating your first family",
+      "familyNameLabel": "Family Name",
+      "familyNamePlaceholder": "e.g. Ahmad Family",
+      "descriptionLabel": "Description (Optional)",
+      "descriptionPlaceholder": "Tell us a little about your family...",
+      "createButton": "Create Family",
+      "creating": "Creating..."
+    }
+  },
+  "member": {
+    "fullName": "Full Name",
+    "nickname": "Nickname",
+    "gender": "Gender",
+    "birthDate": "Date of Birth",
+    "deathDate": "Date of Death",
+    "placeOfBirth": "Place of Birth",
+    "binBinti": "Bin / Binti",
+    "binBintiPlaceholder": "e.g. bin Abdullah or binti Ahmad",
+    "icNumber": "IC Number",
+    "icPlaceholder": "000000-00-0000",
+    "kampung": "Village / Hometown",
+    "kampungPlaceholder": "e.g. Kampung Baru, Kelantan",
+    "negeri": "State",
+    "religion": "Religion",
+    "familyBranch": "Family Branch",
+    "familyBranchPlaceholder": "e.g. Paternal Side",
+    "generationalTitle": "Family Title",
+    "occupation": "Occupation",
+    "occupationPlaceholder": "e.g. Teacher, Doctor, Farmer",
+    "biography": "Biography",
+    "biographyPlaceholder": "Life story, contributions, memories...",
+    "contactEmail": "Email",
+    "emailPlaceholder": "name@example.com",
+    "contactPhone": "Phone Number",
+    "photo": "Profile Photo",
+    "addMember": "Add Member",
+    "editMember": "Edit Member",
+    "deleteMember": "Delete Member",
+    "deleteConfirm": "Are you sure you want to delete this member? This action cannot be undone.",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "addNew": "Add New Member",
+    "addNewDesc": "Add a new member to the {family} family",
+    "unit": "members",
+    "personalInfo": "Personal Information",
+    "culturalInfo": "Cultural Information",
+    "additionalInfo": "Additional Information",
+    "relationships": "Family Relationships",
+    "parents": "Parents",
+    "children": "Children",
+    "spouse": "Spouse",
+    "siblings": "Siblings",
+    "noRelationships": "No relationships yet",
+    "age": "Age",
+    "deceased": "Deceased",
+    "alive": "Alive",
+    "viewProfile": "View Profile",
+    "searchPlaceholder": "Search by name, village, branch...",
+    "noMembers": "No family members yet",
+    "noMembersDesc": "Add the first member to your family",
+    "memberCount": "{count} members",
+    "membersTitle": "Family Members",
+    "selectTitle": "Select title...",
+    "selectNegeri": "Select state...",
+    "none": "— None —",
+    "sections": {
+      "basicInfo": "Basic Information",
+      "malaysianFields": "Malaysian Cultural Fields",
+      "additional": "Additional Information"
+    }
+  },
+  "relationship": {
+    "add": "Add Relationship",
+    "adding": "Adding...",
+    "title": "Add Family Relationship",
+    "type": "Relationship Type",
+    "selectMember": "Select Member",
+    "selectMemberPlaceholder": "Select a family member...",
+    "selectMemberError": "Please select a family member",
+    "success": "Family relationship added!",
+    "types": {
+      "PARENT": "Parent",
+      "CHILD": "Child",
+      "SPOUSE": "Spouse",
+      "SIBLING": "Sibling"
+    }
+  },
+  "tree": {
+    "title": "Family Tree",
+    "loading": "Loading family tree...",
+    "empty": "Family tree is empty",
+    "emptyDesc": "Add the first family member to start your tree",
+    "addMember": "Add Member",
+    "addFirstMember": "Add First Member",
+    "errorTitle": "Error",
+    "errorLoad": "Failed to load family tree",
+    "fitView": "Fit View",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "minimap": "Minimap",
+    "born": "B:",
+    "died": "D:",
+    "deceased": "Al-Fatihah"
+  },
+  "gallery": {
+    "title": "Photo Gallery",
+    "upload": "Upload Photo",
+    "uploading": "Uploading...",
+    "noPhotos": "No photos yet",
+    "noPhotosDesc": "Upload family photos to start building your gallery",
+    "caption": "Caption",
+    "captionPlaceholder": "Tell us about this photo...",
+    "takenAt": "Photo Date",
+    "tagMember": "Tag Member",
+    "tagMemberPlaceholder": "Select member (optional)...",
+    "category": "Category",
+    "categories": {
+      "FAMILY": "Family",
+      "WEDDING": "Wedding",
+      "ANCESTRAL": "Ancestral",
+      "CHILDHOOD": "Childhood",
+      "OTHERS": "Others"
+    },
+    "uploadSuccess": "Photo uploaded successfully!",
+    "uploadError": "Failed to upload photo"
+  },
+  "timeline": {
+    "title": "Family Timeline",
+    "noEvents": "No events yet",
+    "noEventsDesc": "Add birth and death dates to members to see the timeline",
+    "born": "Born",
+    "died": "Passed Away",
+    "decade": "s"
+  },
+  "settings": {
+    "family": {
+      "title": "Family Settings",
+      "name": "Family Name",
+      "namePlaceholder": "Your family name",
+      "description": "Description",
+      "descriptionPlaceholder": "Family description...",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "saveSuccess": "Family settings updated!",
+      "saveError": "Failed to save settings",
+      "shareLink": "Share Link",
+      "shareLinkDesc": "Share this link to give family members access",
+      "copyLink": "Copy Link",
+      "linkCopied": "Link copied!",
+      "invites": "Invite Members",
+      "inviteEmail": "Email Address",
+      "inviteEmailPlaceholder": "email@example.com",
+      "inviteRole": "Role",
+      "inviteButton": "Send Invite",
+      "inviting": "Sending...",
+      "inviteSuccess": "Invite sent!",
+      "inviteError": "Failed to send invite",
+      "pendingInvites": "Pending Invites",
+      "noInvites": "No pending invites",
+      "inviteExpires": "Expires",
+      "inviteExpiresDesc": "Invite link expires in 7 days.",
+      "revokeInvite": "Revoke",
+      "roles": {
+        "OWNER": "Owner",
+        "EDITOR": "Editor",
+        "VIEWER": "Viewer"
+      },
+      "dangerZone": "Danger Zone",
+      "deleteFamily": "Delete Family",
+      "deleteFamilyDesc": "This will permanently delete all family data",
+      "statusAccepted": "Accepted",
+      "statusPending": "Pending",
+      "statusExpired": "Expired"
+    },
+    "account": {
+      "title": "Account Settings",
+      "profile": "Profile",
+      "name": "Name",
+      "email": "Email",
+      "language": "Language",
+      "languageDesc": "Choose your display language",
+      "security": "Security",
+      "securityNote": "To change your password, please contact support",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "saveSuccess": "Profile updated!",
+      "languages": {
+        "ms": "Bahasa Melayu",
+        "en": "English"
+      }
+    }
+  },
+  "landing": {
+    "nav": {
+      "features": "Features",
+      "about": "About",
+      "login": "Sign In",
+      "getStarted": "Get Started"
+    },
+    "hero": {
+      "badge": "Malaysian Family Tree Platform",
+      "title": "Preserve Your Family Heritage",
+      "titleHighlight": "For Future Generations",
+      "subtitle": "A modern platform to document, visualize, and share your family's lineage. Designed specifically for Malaysian families.",
+      "getStarted": "Get Started Free",
+      "viewDemo": "View Demo"
+    },
+    "features": {
+      "title": "Everything You Need",
+      "subtitle": "Built specifically for Malaysian families with features that understand our culture and traditions",
+      "tree": {
+        "title": "Visual Family Tree",
+        "desc": "Visualize family relationships with an interactive tree you can zoom and pan"
+      },
+      "cultural": {
+        "title": "Malaysian Cultural Features",
+        "desc": "Support for Bin/Binti names, IC numbers, Kampung, religion, family titles and more"
+      },
+      "gallery": {
+        "title": "Photo Gallery",
+        "desc": "Safely store and share family photos in one place"
+      },
+      "collaborate": {
+        "title": "Family Collaboration",
+        "desc": "Invite family members to contribute and update information together"
+      },
+      "search": {
+        "title": "Quick Search",
+        "desc": "Find family members by name, village, branch, or title"
+      },
+      "export": {
+        "title": "Export Data",
+        "desc": "Export your family member list as CSV for personal records"
+      }
+    },
+    "cultural": {
+      "title": "Built For Malaysian Families",
+      "subtitle": "We understand the uniqueness of Malaysian naming conventions and family traditions",
+      "items": {
+        "binBinti": "Bin/Binti naming system",
+        "generational": "Family titles (Tok, Wan, Pak Long, Mak Ngah...)",
+        "kampung": "Record kampung and home state",
+        "religion": "Multi-religion support",
+        "ic": "IC/MyKad number",
+        "branches": "Family branch management"
+      }
+    },
+    "cta": {
+      "title": "Start Your Journey Today",
+      "subtitle": "Join Malaysian families using Salasilah to preserve their heritage",
+      "button": "Create Free Account",
+      "demo": "Try Demo"
+    },
+    "footer": {
+      "tagline": "Preserving Malaysian family heritage",
+      "rights": "All rights reserved"
+    }
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "desc": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to Home"
+  },
+  "birthday": {
+    "title": "Upcoming Birthdays",
+    "noBirthdays": "No birthdays in the next 30 days",
+    "today": "Today!",
+    "tomorrow": "Tomorrow",
+    "daysLeft": "{days} days left"
+  },
+  "photo": {
+    "uploadPhoto": "Upload Photo",
+    "dragOrClick": "Drag photo or click to select",
+    "maxSize": "Max size: 5MB (JPG, PNG, WebP)",
+    "changePhoto": "Change Photo",
+    "removePhoto": "Remove Photo",
+    "clickToUpload": "Click to upload",
+    "invalidType": "Please select an image file",
+    "tooLarge": "File too large (max: 5MB)",
+    "uploadSuccess": "Photo uploaded successfully",
+    "uploadFailed": "Upload failed"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "minPassword": "Password must be at least 8 characters",
+    "minName": "Name must be at least 2 characters",
+    "generic": "An error occurred. Please try again.",
+    "unauthorized": "You do not have access",
+    "notFound": "Record not found",
+    "familyRequired": "Family name is required"
+  }
+}

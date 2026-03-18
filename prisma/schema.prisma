@@ -1,0 +1,234 @@
+// Salasilah — Prisma Schema
+// Malaysian Family Tree Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ============================================================
+// AUTH MODELS (NextAuth required)
+// ============================================================
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?   // hashed with bcrypt (credentials provider)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  ownedFamilies Family[]       @relation("FamilyOwner")
+  memberships   FamilyMember[] @relation("UserMemberships")
+  invitesSent   Invite[]       @relation("InviteSender")
+  uploadedPhotos Photo[]       @relation("PhotoUploader")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ============================================================
+// FAMILY MODELS
+// ============================================================
+
+model Family {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  shareToken  String   @unique @default(cuid()) // private link sharing
+  coverPhoto  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  ownerId String
+  owner   User   @relation("FamilyOwner", fields: [ownerId], references: [id])
+
+  members       FamilyMember[]
+  invites       Invite[]
+  photos        Photo[]
+}
+
+model FamilyMember {
+  id       String @id @default(cuid())
+  familyId String
+  family   Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  // ── Basic Info ──────────────────────────────────────────
+  fullName     String
+  nickname     String?
+  gender       Gender
+  birthDate    DateTime?
+  deathDate    DateTime?
+  placeOfBirth String?
+  photoUrl     String?
+  isDeceased   Boolean   @default(false)
+
+  // ── Malaysian Cultural Fields ───────────────────────────
+  binBinti          String?  // e.g., "bin Abdullah" or "binti Ahmad"
+  icNumber          String?  // MyKad IC (000000-00-0000)
+  kampung           String?  // hometown/village
+  negeri            String?  // state (Kelantan, Selangor, etc.)
+  religion          Religion @default(ISLAM)
+  familyBranch      String?  // e.g., "Sebelah Ayah", "Sebelah Ibu"
+  generationalTitle String?  // e.g., "Tok", "Wan", "Pak Long", "Mak Ngah"
+
+  // ── Additional ──────────────────────────────────────────
+  occupation   String?
+  biography    String?  @db.Text
+  contactEmail String?
+  contactPhone String?
+
+  // ── User Account Link ───────────────────────────────────
+  userId String?
+  user   User?   @relation("UserMemberships", fields: [userId], references: [id])
+
+  // ── Role in Family Workspace ────────────────────────────
+  role FamilyRole @default(VIEWER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ── Relationships ───────────────────────────────────────
+  relationshipsAsFrom Relationship[] @relation("RelationshipFrom")
+  relationshipsAsTo   Relationship[] @relation("RelationshipTo")
+
+  // ── Photos ──────────────────────────────────────────────
+  photos Photo[]
+}
+
+model Relationship {
+  id       String           @id @default(cuid())
+  familyId String
+  fromId   String           // member who "has" this relationship
+  toId     String           // the related member
+  type     RelationshipType
+  label    String?          // optional custom label
+  createdAt DateTime        @default(now())
+
+  from FamilyMember @relation("RelationshipFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to   FamilyMember @relation("RelationshipTo", fields: [toId], references: [id], onDelete: Cascade)
+
+  @@unique([fromId, toId, type])
+  @@index([familyId])
+}
+
+model Photo {
+  id           String        @id @default(cuid())
+  familyId     String
+  family       Family        @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  memberId     String?
+  member       FamilyMember? @relation(fields: [memberId], references: [id])
+  url          String
+  thumbnailUrl String?
+  caption      String?
+  takenAt      DateTime?
+  category     PhotoCategory @default(FAMILY)
+  uploadedById String
+  uploader     User          @relation("PhotoUploader", fields: [uploadedById], references: [id])
+  createdAt    DateTime      @default(now())
+
+  @@index([familyId])
+  @@index([memberId])
+}
+
+model Invite {
+  id       String     @id @default(cuid())
+  familyId String
+  family   Family     @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  email    String
+  role     FamilyRole @default(VIEWER)
+  token    String     @unique @default(cuid())
+  status   InviteStatus @default(PENDING)
+  senderId String
+  sender   User       @relation("InviteSender", fields: [senderId], references: [id])
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+
+  @@index([familyId])
+  @@index([email])
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum Religion {
+  ISLAM
+  CHRISTIAN
+  BUDDHIST
+  HINDU
+  OTHERS
+}
+
+enum RelationshipType {
+  PARENT
+  CHILD
+  SPOUSE
+  SIBLING
+}
+
+enum FamilyRole {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+}
+
+enum PhotoCategory {
+  FAMILY
+  WEDDING
+  ANCESTRAL
+  CHILDHOOD
+  OTHERS
+}
