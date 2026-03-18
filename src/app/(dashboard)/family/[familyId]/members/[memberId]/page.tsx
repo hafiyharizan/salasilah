@@ -16,6 +16,7 @@ import {
   Heart, Baby, Users, GitBranch, BookOpen
 } from 'lucide-react'
 import AddRelationshipClient from './AddRelationshipClient'
+import { AvatarUploadProfile } from './AvatarUploadProfile'
 
 type Params = { familyId: string; memberId: string }
 type PageProps = { params: Promise<Params> }
@@ -72,11 +73,12 @@ export default async function MemberProfilePage({ params }: PageProps) {
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 -mt-10 sm:-mt-12">
             <div className="flex items-end gap-4">
               <div className="ring-4 ring-white rounded-full">
-                <MemberAvatar
+                <AvatarUploadProfile
+                  familyId={familyId}
+                  memberId={memberId}
+                  currentUrl={member.photoUrl}
                   name={member.fullName}
-                  photoUrl={member.photoUrl}
                   branch={member.familyBranch}
-                  size="xl"
                 />
               </div>
               <div className="pb-2">

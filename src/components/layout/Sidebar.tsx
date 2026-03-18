@@ -8,7 +8,6 @@ import {
   LayoutDashboard,
   GitBranch,
   Users,
-  Image,
   Clock,
   Settings,
   LogOut,
@@ -65,12 +64,14 @@ export function Sidebar({ familyId, familyName }: SidebarProps) {
               label={t('members')}
               active={pathname.startsWith(`/family/${familyId}/members`)}
             />
+            {/* Gallery temporarily disabled
             <NavLink
               href={`/family/${familyId}/gallery`}
               icon={Image}
               label={t('gallery')}
               active={pathname.startsWith(`/family/${familyId}/gallery`)}
             />
+            */}
             <NavLink
               href={`/family/${familyId}/timeline`}
               icon={Clock}

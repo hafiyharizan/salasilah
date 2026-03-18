@@ -167,6 +167,10 @@
     "selectTitle": "Select title...",
     "selectNegeri": "Select state...",
     "none": "— None —",
+    "profilePhoto": "Profile Photo",
+    "uploadPhotoHint": "Click the avatar to upload a profile picture",
+    "uploadPhotoFormats": "Format: JPEG, PNG or WebP",
+    "uploadPhotoSize": "Maximum size: 2 MB",
     "sections": {
       "basicInfo": "Basic Information",
       "malaysianFields": "Malaysian Cultural Fields",

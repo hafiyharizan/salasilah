@@ -10,7 +10,6 @@ import {
   LayoutDashboard,
   GitBranch,
   Users,
-  Image,
   Clock,
   Settings,
   LogOut,
@@ -88,7 +87,9 @@ export function MobileNav({ isOpen, onClose, familyId, familyName }: MobileNavPr
               </p>
               <MobileNavLink href={`/family/${familyId}`} icon={GitBranch} label={t('familyTree')} active={pathname === `/family/${familyId}`} />
               <MobileNavLink href={`/family/${familyId}/members`} icon={Users} label={t('members')} active={pathname.startsWith(`/family/${familyId}/members`)} />
+              {/* Gallery temporarily disabled
               <MobileNavLink href={`/family/${familyId}/gallery`} icon={Image} label={t('gallery')} active={pathname.startsWith(`/family/${familyId}/gallery`)} />
+              */}
               <MobileNavLink href={`/family/${familyId}/timeline`} icon={Clock} label={t('timeline')} active={pathname.startsWith(`/family/${familyId}/timeline`)} />
               <MobileNavLink href={`/family/${familyId}/settings`} icon={Settings} label={t('settings')} active={pathname.startsWith(`/family/${familyId}/settings`)} />
             </>

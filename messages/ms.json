@@ -167,6 +167,10 @@
     "selectTitle": "Pilih gelaran...",
     "selectNegeri": "Pilih negeri...",
     "none": "— Tiada —",
+    "profilePhoto": "Gambar Profil",
+    "uploadPhotoHint": "Klik avatar untuk muat naik gambar profil",
+    "uploadPhotoFormats": "Format: JPEG, PNG atau WebP",
+    "uploadPhotoSize": "Saiz maksimum: 2 MB",
     "sections": {
       "basicInfo": "Maklumat Asas",
       "malaysianFields": "Maklumat Kebudayaan Malaysia",

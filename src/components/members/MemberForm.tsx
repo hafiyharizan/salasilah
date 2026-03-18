@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -10,6 +11,7 @@ import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { AvatarUpload } from '@/components/members/AvatarUpload'
 import type { FamilyMember } from '@prisma/client'
 
 const GENERATIONAL_TITLES = [
@@ -94,6 +96,8 @@ export function MemberForm({ familyId, member }: MemberFormProps) {
   const gender = watch('gender')
   const isDeceased = watch('isDeceased')
 
+  const [photoUrl, setPhotoUrl] = useState<string | null>(member?.photoUrl ?? null)
+
   async function onSubmit(data: FormData) {
     const url = isEditing
       ? `/api/families/${familyId}/members/${member!.id}`
@@ -105,6 +109,7 @@ export function MemberForm({ familyId, member }: MemberFormProps) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         ...data,
+        photoUrl: photoUrl ?? undefined,
         birthDate: data.birthDate || undefined,
         deathDate: data.deathDate || undefined,
         contactEmail: data.contactEmail || undefined,
@@ -132,6 +137,28 @@ export function MemberForm({ familyId, member }: MemberFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      {/* Avatar Upload */}
+      <section className="card p-6">
+        <h2 className="font-semibold text-gray-900 mb-5 pb-3 border-b border-gray-100">
+          {t('profilePhoto')}
+        </h2>
+        <div className="flex items-center gap-5">
+          <AvatarUpload
+            memberId={member?.id}
+            currentUrl={photoUrl}
+            name={watch('fullName') || 'Ahli'}
+            branch={watch('familyBranch')}
+            size="xl"
+            onUploaded={setPhotoUrl}
+          />
+          <div className="text-sm text-gray-500 space-y-1">
+            <p className="font-medium text-gray-700">{t('uploadPhotoHint')}</p>
+            <p>{t('uploadPhotoFormats')}</p>
+            <p>{t('uploadPhotoSize')}</p>
+          </div>
+        </div>
+      </section>
+
       {/* Section: Basic Info */}
       <section className="card p-6">
         <h2 className="font-semibold text-gray-900 mb-5 pb-3 border-b border-gray-100">
