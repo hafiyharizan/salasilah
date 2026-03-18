@@ -8,15 +8,22 @@ import { StatsCard } from '@/components/dashboard/StatsCard'
 import { BirthdayWidget } from '@/components/dashboard/BirthdayWidget'
 import { RecentMembers } from '@/components/dashboard/RecentMembers'
 import { ActivityFeed } from '@/components/dashboard/ActivityFeed'
+import { JoinFamilyForm } from '@/components/dashboard/JoinFamilyForm'
 import { OnboardingIllustration } from '@/components/shared/EmptyStateIllustration'
 import { Button } from '@/components/ui/button'
-import { Plus, Users, GitBranch, Layers, Cake, TreePine } from 'lucide-react'
+import { Plus, Users, GitBranch, Layers, Cake, TreePine, UserPlus } from 'lucide-react'
 
 export const metadata = { title: 'Papan Pemuka' }
 
 async function getDashboardData(userId: string) {
+  // Find families the user owns OR is a member of
   const families = await prisma.family.findMany({
-    where: { ownerId: userId },
+    where: {
+      OR: [
+        { ownerId: userId },
+        { members: { some: { userId } } },
+      ],
+    },
     include: {
       members: {
         orderBy: { updatedAt: 'desc' },
@@ -52,7 +59,7 @@ export default async function DashboardPage() {
   ])
   const tMember = await getTranslations('member')
 
-  // If no family yet, show onboarding
+  // If no family yet, show onboarding with Create + Join options
   if (families.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[70vh] text-center animate-fade-in-up">
@@ -60,13 +67,34 @@ export default async function DashboardPage() {
         <h1 className="font-display text-3xl font-bold text-gray-900 mb-3">
           {t('noFamily.title')}
         </h1>
-        <p className="text-gray-500 max-w-sm mb-8 leading-relaxed">
+        <p className="text-gray-500 max-w-md mb-10 leading-relaxed">
           {t('noFamily.desc')}
         </p>
-        <CreateFamilyForm
-          namePlaceholder={t('noFamily.familyNamePlaceholder')}
-          buttonLabel={t('noFamily.createButton')}
-        />
+
+        {/* Two-column: Create + Join */}
+        <div className="w-full max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Create New Family */}
+          <div className="card p-6 text-center space-y-4">
+            <div className="w-12 h-12 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto">
+              <TreePine className="w-6 h-6 text-primary-500" />
+            </div>
+            <h2 className="font-semibold text-gray-900">{t('noFamily.createNew')}</h2>
+            <CreateFamilyForm
+              namePlaceholder={t('noFamily.familyNamePlaceholder')}
+              buttonLabel={t('noFamily.createButton')}
+            />
+          </div>
+
+          {/* Join Existing Family */}
+          <div className="card p-6 text-center space-y-4">
+            <div className="w-12 h-12 bg-accent-50 rounded-2xl flex items-center justify-center mx-auto">
+              <UserPlus className="w-6 h-6 text-accent-600" />
+            </div>
+            <h2 className="font-semibold text-gray-900">{t('noFamily.joinTitle')}</h2>
+            <p className="text-sm text-gray-500">{t('noFamily.joinDesc')}</p>
+            <JoinFamilyForm />
+          </div>
+        </div>
       </div>
     )
   }

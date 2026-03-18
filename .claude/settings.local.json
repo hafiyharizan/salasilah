@@ -1,7 +1,27 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); print\\(data[0][''''text'''']\\)\")"
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); print\\(data[0][''''text'''']\\)\")",
+      "Bash(npx tsc:*)",
+      "Bash(npx next:*)",
+      "Bash(npx --yes next lint -- .)",
+      "Bash(NEXT_LINT_DISABLED=true npx next build)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(ls src/app/\\\\\\(dashboard\\\\\\)/)",
+      "Bash(npx prisma:*)",
+      "Bash(tasklist)",
+      "Bash(taskkill //PID 7352 //F)",
+      "Bash(ls -la /c/Users/User/Documents/salasilah/.claude/worktrees/recursing-solomon/src/app/\\\\\\(dashboard\\\\\\)/family/*/)",
+      "Bash(ls -la /c/Users/User/Documents/salasilah/.claude/worktrees/recursing-solomon/src/app/\\\\\\(dashboard\\\\\\)/family/[familyId]/members/)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(cmd.exe /c \"taskkill /F /IM node.exe\")",
+      "Bash(cmd.exe /c \"taskkill /F /IM node.exe 2>&1 & timeout /t 3 & cd C:\\\\Users\\\\User\\\\Documents\\\\salasilah & npx prisma generate 2>&1\")",
+      "Bash(npm install:*)",
+      "Bash(ls /c/Users/User/Documents/salasilah/src/app/\\\\\\(dashboard\\\\\\)/family/[familyId]/)",
+      "mcp__3f35d380-0019-4840-b173-83deeb084f83__list_projects",
+      "mcp__3f35d380-0019-4840-b173-83deeb084f83__execute_sql"
     ]
   }
 }

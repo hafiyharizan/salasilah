@@ -4,6 +4,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { PageHeader } from '@/components/shared/PageHeader'
 import { Badge } from '@/components/ui/badge'
+import { InviteCodeDisplay } from '@/components/shared/InviteCodeDisplay'
 import FamilySettingsClient from './FamilySettingsClient'
 import InviteFormClient from './InviteFormClient'
 import { formatDateMY, roleLabel } from '@/lib/utils'
@@ -60,6 +61,13 @@ export default async function FamilySettingsPage({ params }: Props) {
       <section className="card p-6 space-y-4">
         <h2 className="font-semibold text-gray-900">{t('name')}</h2>
         <FamilySettingsClient family={family} />
+      </section>
+
+      {/* Invite Code */}
+      <section className="card p-6">
+        <h2 className="font-semibold text-gray-900 mb-2">{t('inviteCode')}</h2>
+        <p className="text-sm text-gray-500 mb-4">{t('inviteCodeDesc')}</p>
+        <InviteCodeDisplay code={family.inviteCode} />
       </section>
 
       {/* Share Link */}

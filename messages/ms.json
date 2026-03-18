@@ -102,13 +102,25 @@
     "updated": "dikemaskini",
     "noFamily": {
       "title": "Selamat Datang ke Salasilah",
-      "desc": "Mulakan dengan mencipta keluarga pertama anda",
+      "desc": "Cipta keluarga baru atau sertai keluarga sedia ada menggunakan kod jemputan",
       "familyNameLabel": "Nama Keluarga",
       "familyNamePlaceholder": "cth: Keluarga Ahmad",
       "descriptionLabel": "Penerangan (Pilihan)",
       "descriptionPlaceholder": "Ceritakan sedikit tentang keluarga anda...",
       "createButton": "Cipta Keluarga",
-      "creating": "Sedang mencipta..."
+      "creating": "Sedang mencipta...",
+      "orJoin": "Atau sertai keluarga sedia ada",
+      "joinTitle": "Sertai Keluarga Sedia Ada",
+      "joinDesc": "Masukkan kod jemputan yang dikongsi oleh ahli keluarga",
+      "inviteCodePlaceholder": "cth: SAL-AB12CD",
+      "joinButton": "Sertai Keluarga",
+      "joining": "Menyertai...",
+      "joinPreview": "Anda akan menyertai {familyName} ({count} ahli)",
+      "joinSuccess": "Selamat datang! Anda telah menyertai {familyName}",
+      "joinErrorInvalid": "Kod jemputan tidak sah. Sila semak dan cuba lagi.",
+      "joinErrorAlready": "Anda sudah menjadi ahli keluarga ini",
+      "createNew": "Cipta Keluarga Baru",
+      "joinExisting": "Sertai Keluarga Sedia Ada"
     }
   },
   "member": {
@@ -278,7 +290,11 @@
       "deleteFamilyDesc": "Tindakan ini akan memadam semua data keluarga secara kekal",
       "statusAccepted": "Diterima",
       "statusPending": "Menunggu",
-      "statusExpired": "Tamat"
+      "statusExpired": "Tamat",
+      "inviteCode": "Kod Jemputan",
+      "inviteCodeDesc": "Kongsi kod ini kepada ahli keluarga supaya mereka boleh menyertai keluarga anda",
+      "copyCode": "Salin Kod",
+      "codeCopied": "Kod jemputan disalin!"
     },
     "account": {
       "title": "Tetapan Akaun",

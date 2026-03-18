@@ -102,13 +102,25 @@
     "updated": "updated",
     "noFamily": {
       "title": "Welcome to Salasilah",
-      "desc": "Start by creating your first family",
+      "desc": "Create a new family or join an existing one using an invite code",
       "familyNameLabel": "Family Name",
       "familyNamePlaceholder": "e.g. Ahmad Family",
       "descriptionLabel": "Description (Optional)",
       "descriptionPlaceholder": "Tell us a little about your family...",
       "createButton": "Create Family",
-      "creating": "Creating..."
+      "creating": "Creating...",
+      "orJoin": "Or join an existing family",
+      "joinTitle": "Join Existing Family",
+      "joinDesc": "Enter the invite code shared by a family member",
+      "inviteCodePlaceholder": "e.g. SAL-AB12CD",
+      "joinButton": "Join Family",
+      "joining": "Joining...",
+      "joinPreview": "You will join {familyName} ({count} members)",
+      "joinSuccess": "Welcome! You have joined {familyName}",
+      "joinErrorInvalid": "Invalid invite code. Please check and try again.",
+      "joinErrorAlready": "You are already a member of this family",
+      "createNew": "Create New Family",
+      "joinExisting": "Join Existing Family"
     }
   },
   "member": {
@@ -278,7 +290,11 @@
       "deleteFamilyDesc": "This will permanently delete all family data",
       "statusAccepted": "Accepted",
       "statusPending": "Pending",
-      "statusExpired": "Expired"
+      "statusExpired": "Expired",
+      "inviteCode": "Invite Code",
+      "inviteCodeDesc": "Share this code with family members so they can join your family",
+      "copyCode": "Copy Code",
+      "codeCopied": "Invite code copied!"
     },
     "account": {
       "title": "Account Settings",

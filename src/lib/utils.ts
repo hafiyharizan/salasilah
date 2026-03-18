@@ -127,3 +127,13 @@ export function truncate(str: string, length: number): string {
   if (str.length <= length) return str
   return str.slice(0, length) + '...'
 }
+
+// Generate a short, user-friendly invite code like SAL-AB12CD
+export function generateInviteCode(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789' // no I/O/0/1 to avoid confusion
+  let code = ''
+  for (let i = 0; i < 6; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)]
+  }
+  return `SAL-${code}`
+}

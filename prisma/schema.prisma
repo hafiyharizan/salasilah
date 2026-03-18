@@ -77,6 +77,7 @@ model Family {
   name        String
   description String?
   shareToken  String   @unique @default(cuid()) // private link sharing
+  inviteCode  String   @unique @default(cuid()) // short join code (e.g. SAL-AB12CD)
   coverPhoto  String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
