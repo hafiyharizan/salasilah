@@ -5,6 +5,7 @@ import type {
   Relationship,
   Photo,
   Invite,
+  TreeNodeLayout,
   Gender,
   Religion,
   RelationshipType,
@@ -26,6 +27,7 @@ export type {
   FamilyRole,
   InviteStatus,
   PhotoCategory,
+  TreeNodeLayout,
 }
 
 // Extended types with relations

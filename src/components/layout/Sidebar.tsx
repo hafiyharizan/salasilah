@@ -11,10 +11,10 @@ import {
   Clock,
   Settings,
   LogOut,
-  TreePine,
   MapPin,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { SalasilahLogo } from '@/components/brand/SalasilahLogo'
 
 interface SidebarProps {
   familyId?: string
@@ -30,13 +30,15 @@ export function Sidebar({ familyId, familyName }: SidebarProps) {
       {/* Logo */}
       <div className="p-6 border-b border-primary-400/40">
         <Link href="/dashboard" className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-accent rounded-lg flex items-center justify-center shrink-0">
-            <TreePine className="w-5 h-5 text-primary-900" />
-          </div>
-          <div>
-            <span className="text-white font-display text-lg font-semibold leading-tight">Salasilah</span>
+          <div className="min-w-0">
+            <SalasilahLogo
+              tone="inverse"
+              className="gap-3"
+              emblemClassName="h-9 w-9"
+              textClassName="text-lg"
+            />
             {familyName && (
-              <p className="text-primary-300 text-xs truncate max-w-[140px]">{familyName}</p>
+              <p className="mt-1 text-primary-300 text-xs truncate max-w-[160px]">{familyName}</p>
             )}
           </div>
         </Link>

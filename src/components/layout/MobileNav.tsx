@@ -13,11 +13,11 @@ import {
   Clock,
   Settings,
   LogOut,
-  TreePine,
   MapPin,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { SalasilahLogo } from '@/components/brand/SalasilahLogo'
 
 interface MobileNavProps {
   isOpen: boolean
@@ -61,12 +61,9 @@ export function MobileNav({ isOpen, onClose, familyId, familyName }: MobileNavPr
         {/* Header */}
         <div className="p-5 border-b border-primary-400/40 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-3" onClick={onClose}>
-            <div className="w-9 h-9 bg-accent rounded-lg flex items-center justify-center">
-              <TreePine className="w-5 h-5 text-primary-900" />
-            </div>
-            <div>
-              <span className="text-white font-display text-lg font-semibold">Salasilah</span>
-              {familyName && <p className="text-primary-300 text-xs truncate max-w-[150px]">{familyName}</p>}
+            <div className="min-w-0">
+              <SalasilahLogo tone="inverse" className="gap-3" emblemClassName="h-9 w-9" textClassName="text-lg" />
+              {familyName && <p className="mt-1 text-primary-300 text-xs truncate max-w-[150px]">{familyName}</p>}
             </div>
           </Link>
           <button

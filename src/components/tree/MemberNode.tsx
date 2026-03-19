@@ -9,6 +9,31 @@ import type { MemberNodeData } from '@/lib/tree-utils'
 
 type MemberFlowNode = Node<MemberNodeData, 'memberNode'>
 
+// Gender accent colors — subtle, tasteful, consistent with premium feel
+const GENDER_STYLES = {
+  MALE: {
+    borderAccent: '#3B82F6',   // blue-500
+    bgTint: 'rgba(59,130,246,0.04)',
+    iconBg: 'rgba(59,130,246,0.10)',
+    iconColor: '#3B82F6',
+    icon: '♂',
+  },
+  FEMALE: {
+    borderAccent: '#EC4899',   // pink-500
+    bgTint: 'rgba(236,72,153,0.04)',
+    iconBg: 'rgba(236,72,153,0.10)',
+    iconColor: '#EC4899',
+    icon: '♀',
+  },
+  NEUTRAL: {
+    borderAccent: '#94A3B8',   // slate-400
+    bgTint: 'transparent',
+    iconBg: 'rgba(148,163,184,0.10)',
+    iconColor: '#94A3B8',
+    icon: '⚬',
+  },
+} as const
+
 function MemberNodeComponent({ data, selected }: NodeProps<MemberFlowNode>) {
   const { member, branchColor } = data
   const initials = getInitials(member.fullName)
@@ -17,15 +42,24 @@ function MemberNodeComponent({ data, selected }: NodeProps<MemberFlowNode>) {
   const yearsLabel = birthYear && deathYear ? `${birthYear} - ${deathYear}` : birthYear ?? deathYear
   const branchLabel = member.familyBranch?.replace(/_/g, ' ') ?? 'Family branch'
 
+  const gender = GENDER_STYLES[member.gender as keyof typeof GENDER_STYLES] ?? GENDER_STYLES.NEUTRAL
+
   return (
     <div
       className={[
-        'group relative w-[240px] overflow-hidden rounded-[28px] border bg-white/95 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur transition-all duration-300',
+        'group relative w-[240px] overflow-hidden rounded-[28px] bg-white/95 shadow-[0_18px_40px_rgba(15,23,42,0.08)] backdrop-blur transition-all duration-300',
         selected
-          ? 'border-transparent ring-4 ring-offset-4'
-          : 'border-white/70 hover:-translate-y-1 hover:shadow-[0_26px_60px_rgba(15,23,42,0.14)]',
+          ? 'ring-4 ring-offset-4'
+          : 'hover:-translate-y-1 hover:shadow-[0_26px_60px_rgba(15,23,42,0.14)]',
       ].join(' ')}
       style={{
+        // Subtle gender-coloured left border + top border accent
+        borderWidth: '2px',
+        borderStyle: 'solid',
+        borderColor: `${gender.borderAccent}30`,
+        borderLeftColor: gender.borderAccent,
+        borderLeftWidth: '4px',
+        backgroundColor: gender.bgTint,
         ...(selected && { '--tw-ring-color': `${branchColor}40` } as CSSProperties),
       }}
     >
@@ -81,11 +115,29 @@ function MemberNodeComponent({ data, selected }: NodeProps<MemberFlowNode>) {
             </div>
           </div>
 
-          {member.isDeceased && (
-            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-              In memoriam
+          {/* Gender indicator + deceased icon (replaces "In memoriam" pill) */}
+          <div className="flex flex-col items-center gap-1.5 shrink-0 pt-0.5">
+            {/* Gender badge */}
+            <span
+              className="flex h-7 w-7 items-center justify-center rounded-full text-sm font-medium"
+              style={{ backgroundColor: gender.iconBg, color: gender.iconColor }}
+              title={member.gender === 'MALE' ? 'Male' : member.gender === 'FEMALE' ? 'Female' : 'Unknown'}
+              aria-label={member.gender === 'MALE' ? 'Male' : member.gender === 'FEMALE' ? 'Female' : 'Gender not set'}
+            >
+              {gender.icon}
             </span>
-          )}
+
+            {/* Deceased icon — subtle dove/prayer icon instead of text pill */}
+            {member.isDeceased && (
+              <span
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-sm"
+                title="Al-Fatihah (Deceased)"
+                aria-label="Deceased"
+              >
+                🕊
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="rounded-2xl border border-slate-200/70 bg-slate-50/80 p-3">
@@ -108,6 +160,7 @@ function MemberNodeComponent({ data, selected }: NodeProps<MemberFlowNode>) {
         </div>
       </div>
 
+      {/* Handles for edges */}
       <Handle
         type="target"
         position={Position.Top}

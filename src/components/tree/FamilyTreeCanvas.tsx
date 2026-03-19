@@ -17,7 +17,8 @@ import '@xyflow/react/dist/style.css'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { GitBranch, Heart, Plus, Users } from 'lucide-react'
+import { GitBranch, Heart, Plus, RotateCcw, Save, Users } from 'lucide-react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { EmptyState } from '@/components/shared/EmptyState'
 import { LoadingSpinner } from '@/components/shared/LoadingSpinner'
@@ -37,24 +38,28 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isDirty, setIsDirty] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+
+  const loadTree = useCallback(async () => {
+    try {
+      const res = await fetch(`/api/families/${familyId}/tree`)
+      if (!res.ok) throw new Error('load-failed')
+      const data = await res.json()
+      setNodes(data.nodes)
+      setEdges(data.edges)
+      setIsDirty(false)
+      setError(null)
+    } catch {
+      setError(t('errorLoad'))
+    } finally {
+      setLoading(false)
+    }
+  }, [familyId, setEdges, setNodes, t])
 
   useEffect(() => {
-    async function loadTree() {
-      try {
-        const res = await fetch(`/api/families/${familyId}/tree`)
-        if (!res.ok) throw new Error('load-failed')
-        const data = await res.json()
-        setNodes(data.nodes)
-        setEdges(data.edges)
-      } catch {
-        setError(t('errorLoad'))
-      } finally {
-        setLoading(false)
-      }
-    }
-
     loadTree()
-  }, [familyId, setEdges, setNodes, t])
+  }, [loadTree])
 
   const onNodeClick = useCallback(
     (_: React.MouseEvent, node: Node) => {
@@ -62,6 +67,57 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
     },
     [familyId, router]
   )
+
+  const handleNodeDragStop = useCallback(() => {
+    setIsDirty(true)
+  }, [])
+
+  const handleSaveLayout = useCallback(async () => {
+    setIsSaving(true)
+
+    try {
+      const res = await fetch(`/api/families/${familyId}/tree`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nodes: nodes.map((node) => ({
+            id: node.id,
+            position: node.position,
+          })),
+        }),
+      })
+
+      if (!res.ok) throw new Error('save-failed')
+
+      setIsDirty(false)
+      toast.success('Tree layout saved')
+    } catch {
+      toast.error('Unable to save tree layout')
+    } finally {
+      setIsSaving(false)
+    }
+  }, [familyId, nodes])
+
+  const handleResetLayout = useCallback(async () => {
+    setIsSaving(true)
+
+    try {
+      const res = await fetch(`/api/families/${familyId}/tree`, {
+        method: 'DELETE',
+      })
+
+      if (!res.ok) throw new Error('reset-failed')
+
+      setLoading(true)
+      await loadTree()
+      toast.success('Tree layout reset')
+    } catch {
+      setLoading(false)
+      toast.error('Unable to reset tree layout')
+    } finally {
+      setIsSaving(false)
+    }
+  }, [familyId, loadTree])
 
   if (loading) {
     return (
@@ -107,6 +163,7 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeClick={onNodeClick}
+        onNodeDragStop={handleNodeDragStop}
         nodeTypes={nodeTypes}
         fitView
         fitViewOptions={{ padding: 0.24 }}
@@ -131,14 +188,25 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
             <div className="mt-4 space-y-2">
               <div className="flex items-center gap-3 text-xs text-slate-600">
                 <span className="h-0.5 w-10 rounded-full bg-primary-700" />
-                Direct lineage
+                Parent → Child (downward)
               </div>
               <div className="flex items-center gap-3 text-xs text-slate-600">
                 <span className="flex items-center gap-1">
                   <span className="h-0.5 w-8 border-t-2 border-dashed border-[#B8891E]" />
                   <Heart className="h-3 w-3 text-[#B8891E]" />
                 </span>
-                Marriage connection
+                Spouse (side by side)
+              </div>
+              <div className="flex items-center gap-3 text-xs text-slate-600">
+                <span className="flex items-center gap-1.5">
+                  <span className="flex h-4 w-4 items-center justify-center rounded-full bg-blue-50 text-[10px] text-blue-500">♂</span>
+                  <span className="flex h-4 w-4 items-center justify-center rounded-full bg-pink-50 text-[10px] text-pink-500">♀</span>
+                </span>
+                Gender indicator
+              </div>
+              <div className="flex items-center gap-3 text-xs text-slate-600">
+                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-slate-100 text-[10px]">🕊</span>
+                Deceased
               </div>
             </div>
           </div>
@@ -150,6 +218,27 @@ export function FamilyTreeCanvas({ familyId }: FamilyTreeCanvasProps) {
             <div className="mt-2 flex items-center justify-end gap-2 text-slate-900">
               <Users className="h-4 w-4 text-primary-700" />
               <span className="text-lg font-semibold">{nodes.length}</span>
+            </div>
+            <div className="mt-4 flex items-center justify-end gap-2">
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={handleResetLayout}
+                disabled={isSaving}
+              >
+                <RotateCcw className="w-4 h-4" />
+                Reset
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                onClick={handleSaveLayout}
+                disabled={!isDirty || isSaving}
+              >
+                <Save className="w-4 h-4" />
+                {isSaving ? 'Saving...' : 'Save layout'}
+              </Button>
             </div>
           </div>
         </Panel>

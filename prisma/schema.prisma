@@ -85,6 +85,7 @@ model Family {
   owner   User   @relation("FamilyOwner", fields: [ownerId], references: [id])
 
   members       FamilyMember[]
+  treeLayouts   TreeNodeLayout[]
   invites       Invite[]
   photos        Photo[]
 }
@@ -132,6 +133,7 @@ model FamilyMember {
   // ── Relationships ───────────────────────────────────────
   relationshipsAsFrom Relationship[] @relation("RelationshipFrom")
   relationshipsAsTo   Relationship[] @relation("RelationshipTo")
+  treeLayouts         TreeNodeLayout[]
 
   // ── Photos ──────────────────────────────────────────────
   photos Photo[]
@@ -187,6 +189,22 @@ model Invite {
 
   @@index([familyId])
   @@index([email])
+}
+
+model TreeNodeLayout {
+  id        String       @id @default(cuid())
+  familyId  String
+  family    Family       @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  memberId  String
+  member    FamilyMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  x         Float
+  y         Float
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@unique([familyId, memberId])
+  @@index([familyId])
+  @@index([memberId])
 }
 
 // ============================================================

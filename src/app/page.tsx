@@ -3,10 +3,11 @@ import { getTranslations } from 'next-intl/server'
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
+import { SalasilahLogo } from '@/components/brand/SalasilahLogo'
 import {
-  TreePine, Users, Globe, Lock, GitBranch,
+  Users, GitBranch,
   Image, Clock, Download, ChevronRight, Star,
-  MapPin, Heart, Calendar
+  Heart
 } from 'lucide-react'
 
 export const metadata = {
@@ -25,12 +26,7 @@ export default async function LandingPage() {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-primary-500 rounded-xl flex items-center justify-center">
-              <TreePine className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-display text-xl font-bold text-primary-500">Salasilah</span>
-          </div>
+          <SalasilahLogo className="gap-2.5" emblemClassName="h-9 w-9" textClassName="translate-y-[1px]" />
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
             <Link href="/login" className="text-gray-600 hover:text-primary-500 font-medium text-sm hidden sm:block transition-colors">
@@ -189,10 +185,7 @@ export default async function LandingPage() {
       <footer className="py-10 px-4 border-t border-gray-100">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-primary-500 rounded-lg flex items-center justify-center">
-              <TreePine className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-display font-bold text-primary-500">Salasilah</span>
+            <SalasilahLogo className="gap-2" emblemClassName="h-7 w-7" textClassName="text-base" />
           </div>
           <p className="text-gray-400 text-sm">
             © {new Date().getFullYear()} Salasilah · {t('footer.tagline')}
