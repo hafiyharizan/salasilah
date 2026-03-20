@@ -12,7 +12,6 @@ export const memberSchema = z.object({
 
   // Malaysian cultural fields
   binBinti: z.string().max(200).optional(),
-  icNumber: z.string().regex(/^\d{6}-\d{2}-\d{4}$/, 'Format IC tidak sah (000000-00-0000)').optional().or(z.literal('')),
   kampung: z.string().max(200).optional(),
   negeri: z.string().max(100).optional(),
   religion: z.enum(['ISLAM', 'CHRISTIAN', 'BUDDHIST', 'HINDU', 'OTHERS']).optional(),

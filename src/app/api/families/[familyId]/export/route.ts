@@ -41,7 +41,6 @@ export async function GET(request: NextRequest, context: FamilyRouteContext) {
       'Gelaran Keluarga': m.generationalTitle ?? '',
       'Cawangan Keluarga': m.familyBranch ?? '',
       'Pekerjaan': m.occupation ?? '',
-      'No. IC': m.icNumber ?? '',
       'Emel': m.contactEmail ?? '',
       'Telefon': m.contactPhone ?? '',
       'Biografi': m.biography ?? '',

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
+import { SalasilahLogo } from '@/components/brand/SalasilahLogo'
 
 export const metadata: Metadata = {
   title: 'Log Masuk — Salasilah',
@@ -11,11 +12,13 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     <div className="min-h-screen bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700 flex flex-col">
       {/* Header */}
       <header className="p-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center">
-            <span className="text-primary-900 font-bold text-lg font-display">S</span>
-          </div>
-          <span className="text-white font-display text-xl font-semibold">Salasilah</span>
+        <Link href="/">
+          <SalasilahLogo
+            tone="inverse"
+            className="gap-3"
+            emblemClassName="h-9 w-9"
+            textClassName="text-xl"
+          />
         </Link>
         <LanguageSwitcher />
       </header>

@@ -8,7 +8,7 @@ export function membersToCSV(members: FamilyMember[]): string {
     'Nama Penuh', 'Nama Panggilan', 'Bin/Binti', 'Jantina',
     'Tarikh Lahir', 'Tarikh Meninggal', 'Tempat Lahir',
     'Alamat Semasa', 'Negeri', 'Agama', 'Gelaran Keluarga',
-    'Cawangan Keluarga', 'Pekerjaan', 'No. IC',
+    'Cawangan Keluarga', 'Pekerjaan',
     'Emel', 'Telefon', 'Biografi'
   ]
 
@@ -26,7 +26,6 @@ export function membersToCSV(members: FamilyMember[]): string {
     m.generationalTitle ?? '',
     m.familyBranch ?? '',
     m.occupation ?? '',
-    m.icNumber ?? '',
     m.contactEmail ?? '',
     m.contactPhone ?? '',
     (m.biography ?? '').replace(/\n/g, ' '),

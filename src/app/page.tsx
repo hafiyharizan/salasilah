@@ -6,7 +6,7 @@ import { LanguageSwitcher } from '@/components/layout/LanguageSwitcher'
 import { SalasilahLogo } from '@/components/brand/SalasilahLogo'
 import {
   Users, GitBranch,
-  Image, Clock, Download, ChevronRight, Star,
+  Clock, Download, ChevronRight, Star,
   Heart
 } from 'lucide-react'
 
@@ -119,7 +119,6 @@ export default async function LandingPage() {
               { icon: GitBranch, key: 'tree' },
               { icon: Users, key: 'cultural' },
               { icon: Heart, key: 'collaborate' },
-              { icon: Image, key: 'gallery' },
               { icon: Clock, key: 'search' },
               { icon: Download, key: 'export' },
             ].map(({ icon: Icon, key }) => (
@@ -144,13 +143,12 @@ export default async function LandingPage() {
           <p className="text-gray-500 mb-10 text-lg">
             {t('cultural.subtitle')}
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {[
               { icon: '👴', key: 'generational' },
               { icon: '🏡', key: 'kampung' },
               { icon: '☪️', key: 'binBinti' },
               { icon: '🌿', key: 'branches' },
-              { icon: '📋', key: 'ic' },
               { icon: '🛐', key: 'religion' },
             ].map(({ icon, key }) => (
               <div key={key} className="card p-4 text-center">

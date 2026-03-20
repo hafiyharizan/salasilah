@@ -38,7 +38,6 @@ const schema = z.object({
   isDeceased: z.boolean().optional(),
   placeOfBirth: z.string().optional(),
   binBinti: z.string().optional(),
-  icNumber: z.string().optional(),
   currentAddress: z.string().optional(),
   negeri: z.string().optional(),
   religion: z.string().optional(),
@@ -87,7 +86,6 @@ export function MemberForm({ familyId, member }: MemberFormProps) {
       isDeceased: member?.isDeceased ?? false,
       placeOfBirth: member?.placeOfBirth ?? '',
       binBinti: member?.binBinti ?? '',
-      icNumber: member?.icNumber ?? '',
       currentAddress: member?.currentAddress ?? '',
       negeri: member?.negeri ?? '',
       religion: member?.religion ?? 'ISLAM',
@@ -338,14 +336,6 @@ export function MemberForm({ familyId, member }: MemberFormProps) {
                 ))}
               </SelectContent>
             </Select>
-          </div>
-
-          {/* IC Number */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('icNumber')} <span className="text-xs text-gray-400">({tCommon('optional')})</span>
-            </label>
-            <Input {...register('icNumber')} placeholder={t('icPlaceholder')} />
           </div>
 
           {/* Family Branch */}

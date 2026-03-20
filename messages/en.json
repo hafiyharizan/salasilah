@@ -58,7 +58,9 @@
       "demoHint": "Demo: demo@salasilah.my / demo1234",
       "errorInvalid": "Invalid email or password",
       "showPassword": "Show password",
-      "hidePassword": "Hide password"
+      "hidePassword": "Hide password",
+      "loginSuccess": "Login Successful",
+      "redirecting": "Taking you to your dashboard..."
     },
     "register": {
       "title": "Create Account",

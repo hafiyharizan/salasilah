@@ -7,14 +7,16 @@ import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Loader2, Mail, Lock, Eye, EyeOff } from 'lucide-react'
+import { Loader2, Mail, Lock, Eye, EyeOff, CheckCircle2 } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { SalasilahLogo } from '@/components/brand/SalasilahLogo'
 
 export default function LoginPage() {
   const router = useRouter()
   const t = useTranslations('auth.login')
   const [showPassword, setShowPassword] = useState(false)
   const [serverError, setServerError] = useState('')
+  const [loginSuccess, setLoginSuccess] = useState(false)
 
   const loginSchema = z.object({
     email: z.string().email(t('errorInvalid')),
@@ -39,9 +41,33 @@ export default function LoginPage() {
     if (result?.error) {
       setServerError(t('errorInvalid'))
     } else {
-      router.push('/dashboard')
-      router.refresh()
+      setLoginSuccess(true)
+      // Brief pause to show success state, then redirect
+      setTimeout(() => {
+        router.push('/dashboard')
+        router.refresh()
+      }, 1200)
     }
+  }
+
+  // Success overlay
+  if (loginSuccess) {
+    return (
+      <div className="bg-white rounded-2xl shadow-2xl p-10 text-center animate-fade-in">
+        <div className="flex flex-col items-center gap-5">
+          <div className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center animate-scale-in">
+            <CheckCircle2 className="w-9 h-9 text-green-500" />
+          </div>
+          <div>
+            <h2 className="font-display text-xl font-bold text-gray-900 mb-1">
+              {t('loginSuccess')}
+            </h2>
+            <p className="text-gray-500 text-sm">{t('redirecting')}</p>
+          </div>
+          <SalasilahLogo variant="icon" className="h-8 w-8 opacity-40 animate-pulse" />
+        </div>
+      </div>
+    )
   }
 
   return (

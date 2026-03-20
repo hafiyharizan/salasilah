@@ -1,6 +1,5 @@
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { getTranslations } from 'next-intl/server'
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
@@ -163,9 +162,6 @@ export default async function MemberProfilePage({ params }: PageProps) {
               {member.occupation && (
                 <InfoRow icon={Briefcase} label={t('occupation')}>{member.occupation}</InfoRow>
               )}
-              {member.icNumber && (
-                <InfoRow icon={User} label={t('icNumber')}>{member.icNumber}</InfoRow>
-              )}
               {member.contactPhone && (
                 <InfoRow icon={Phone} label={t('contactPhone')}>{member.contactPhone}</InfoRow>
               )}
@@ -237,31 +233,7 @@ export default async function MemberProfilePage({ params }: PageProps) {
             </div>
           )}
 
-          {/* Photo Gallery */}
-          {member.photos.length > 0 && (
-            <div className="card p-5">
-              <h2 className="font-semibold text-gray-900 mb-4">{t('photo')}</h2>
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
-                {member.photos.map((photo) => (
-                  <div key={photo.id} className="aspect-square rounded-xl overflow-hidden relative">
-                    <Image
-                      src={photo.url}
-                      alt={photo.caption ?? member.fullName}
-                      fill
-                      className="object-cover hover:scale-105 transition-transform duration-300"
-                      sizes="150px"
-                    />
-                  </div>
-                ))}
-              </div>
-              <Link
-                href={`/family/${familyId}/gallery`}
-                className="text-xs text-primary-500 font-medium mt-3 inline-block hover:underline"
-              >
-                {t('viewProfile')} →
-              </Link>
-            </div>
-          )}
+          {/* Photo Gallery — hidden while gallery feature is disabled */}
         </div>
       </div>
     </div>
@@ -288,6 +260,13 @@ function InfoRow({
   )
 }
 
+// Gender accent colours — matching MemberNode tree design
+const GENDER_ACCENT = {
+  MALE: { border: '#3B82F6', bg: 'rgba(59,130,246,0.04)', icon: '♂', color: '#3B82F6' },
+  FEMALE: { border: '#EC4899', bg: 'rgba(236,72,153,0.04)', icon: '♀', color: '#EC4899' },
+  NEUTRAL: { border: '#94A3B8', bg: 'transparent', icon: '⚬', color: '#94A3B8' },
+} as const
+
 function RelationGroup({
   title,
   icon: Icon,
@@ -307,30 +286,67 @@ function RelationGroup({
         <Icon className="w-3.5 h-3.5" />
         {title}
       </h3>
-      <div className="space-y-1.5">
-        {relationships.map((rel) => (
-          <div
-            key={rel.id}
-            className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 transition-colors group"
-          >
-            <Link
-              href={`/family/${familyId}/members/${rel.to.id}`}
-              className="flex items-center gap-2 flex-1 min-w-0"
+      <div className="space-y-2">
+        {relationships.map((rel) => {
+          const gender = GENDER_ACCENT[rel.to.gender as keyof typeof GENDER_ACCENT] ?? GENDER_ACCENT.NEUTRAL
+          const branch = getBranchColor(rel.to.familyBranch)
+
+          return (
+            <div
+              key={rel.id}
+              className="relative flex items-center gap-3 p-2.5 rounded-xl transition-all group hover:shadow-sm"
+              style={{
+                borderWidth: '1.5px',
+                borderStyle: 'solid',
+                borderColor: `${gender.border}25`,
+                borderLeftColor: gender.border,
+                borderLeftWidth: '3px',
+                backgroundColor: gender.bg,
+              }}
             >
-              <MemberAvatar name={rel.to.fullName} photoUrl={rel.to.photoUrl} branch={rel.to.familyBranch} size="sm" />
-              <span className="text-sm font-medium text-gray-700 group-hover:text-primary-600 transition-colors truncate">
-                {rel.to.fullName}
-              </span>
-            </Link>
-            <RemoveRelationshipButton
-              familyId={familyId}
-              fromId={memberId}
-              toId={rel.to.id}
-              type={rel.type}
-              memberName={rel.to.fullName}
-            />
-          </div>
-        ))}
+              <Link
+                href={`/family/${familyId}/members/${rel.to.id}`}
+                className="flex items-center gap-3 flex-1 min-w-0"
+              >
+                <MemberAvatar name={rel.to.fullName} photoUrl={rel.to.photoUrl} branch={rel.to.familyBranch} size="sm" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold text-gray-800 group-hover:text-primary-600 transition-colors truncate leading-tight">
+                    {rel.to.fullName}
+                  </p>
+                  {(rel.to.generationalTitle || rel.to.familyBranch) && (
+                    <p className="text-[10px] font-medium truncate mt-0.5" style={{ color: branch }}>
+                      {rel.to.generationalTitle || rel.to.familyBranch}
+                    </p>
+                  )}
+                </div>
+                {/* Gender + Deceased indicators — matching tree node */}
+                <div className="flex items-center gap-1 shrink-0">
+                  <span
+                    className="flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-medium"
+                    style={{ backgroundColor: `${gender.color}15`, color: gender.color }}
+                  >
+                    {gender.icon}
+                  </span>
+                  {rel.to.isDeceased && (
+                    <span
+                      className="flex h-5 w-5 items-center justify-center rounded-full bg-slate-100 text-[10px]"
+                      title="Al-Fatihah"
+                    >
+                      🕊
+                    </span>
+                  )}
+                </div>
+              </Link>
+              <RemoveRelationshipButton
+                familyId={familyId}
+                fromId={memberId}
+                toId={rel.to.id}
+                type={rel.type}
+                memberName={rel.to.fullName}
+              />
+            </div>
+          )
+        })}
       </div>
     </div>
   )

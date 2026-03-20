@@ -58,7 +58,9 @@
       "demoHint": "Demo: demo@salasilah.my / demo1234",
       "errorInvalid": "E-mel atau kata laluan tidak sah",
       "showPassword": "Tunjuk kata laluan",
-      "hidePassword": "Sembunyikan kata laluan"
+      "hidePassword": "Sembunyikan kata laluan",
+      "loginSuccess": "Berjaya Log Masuk",
+      "redirecting": "Membawa anda ke papan pemuka..."
     },
     "register": {
       "title": "Cipta Akaun",

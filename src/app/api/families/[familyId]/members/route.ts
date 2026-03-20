@@ -14,7 +14,6 @@ const memberSchema = z.object({
   placeOfBirth: z.string().optional(),
   photoUrl: z.string().optional(),
   binBinti: z.string().optional(),
-  icNumber: z.string().optional(),
   currentAddress: z.string().optional(),
   negeri: z.string().optional(),
   religion: z.nativeEnum(Religion).optional(),
