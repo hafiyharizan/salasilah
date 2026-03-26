@@ -1,6 +1,3 @@
-// Salasilah — Prisma Schema
-// Malaysian Family Tree Platform
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,26 +8,21 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-// ============================================================
-// AUTH MODELS (NextAuth required)
-// ============================================================
-
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?   // hashed with bcrypt (credentials provider)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  accounts      Account[]
-  sessions      Session[]
-  ownedFamilies Family[]       @relation("FamilyOwner")
-  memberships   FamilyMember[] @relation("UserMemberships")
-  invitesSent   Invite[]       @relation("InviteSender")
-  uploadedPhotos Photo[]       @relation("PhotoUploader")
+  id             String         @id @default(cuid())
+  name           String?
+  email          String         @unique
+  emailVerified  DateTime?
+  image          String?
+  password       String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  accounts       Account[]
+  ownedFamilies  Family[]       @relation("FamilyOwner")
+  memberships    FamilyMember[] @relation("UserMemberships")
+  invitesSent    Invite[]       @relation("InviteSender")
+  uploadedPhotos Photo[]        @relation("PhotoUploader")
+  sessions       Session[]
 }
 
 model Account {
@@ -39,15 +31,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -68,88 +59,66 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// ============================================================
-// FAMILY MODELS
-// ============================================================
-
 model Family {
-  id          String   @id @default(cuid())
+  id          String           @id @default(cuid())
   name        String
   description String?
-  shareToken  String   @unique @default(cuid()) // private link sharing
+  shareToken  String           @unique @default(cuid())
   coverPhoto  String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  ownerId String
-  owner   User   @relation("FamilyOwner", fields: [ownerId], references: [id])
-
-  members       FamilyMember[]
-  treeLayouts   TreeNodeLayout[]
-  invites       Invite[]
-  photos        Photo[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  ownerId     String
+  owner       User             @relation("FamilyOwner", fields: [ownerId], references: [id])
+  members     FamilyMember[]
+  invites     Invite[]
+  photos      Photo[]
+  treeLayouts TreeNodeLayout[]
 }
 
 model FamilyMember {
-  id       String @id @default(cuid())
-  familyId String
-  family   Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
-
-  // ── Basic Info ──────────────────────────────────────────
-  fullName     String
-  nickname     String?
-  gender       Gender
-  birthDate    DateTime?
-  deathDate    DateTime?
-  placeOfBirth String?
-  photoUrl     String?
-  isDeceased   Boolean   @default(false)
-
-  // ── Malaysian Cultural Fields ───────────────────────────
-  binBinti          String?  // e.g., "bin Abdullah" or "binti Ahmad"
-  icNumber          String?  // MyKad IC (000000-00-0000)
-  currentAddress    String?  // current address
-  negeri            String?  // state (Kelantan, Selangor, etc.)
-  religion          Religion @default(ISLAM)
-  familyBranch      String?  // e.g., "Sebelah Ayah", "Sebelah Ibu"
-  generationalTitle String?  // e.g., "Tok", "Wan", "Pak Long", "Mak Ngah"
-
-  // ── Additional ──────────────────────────────────────────
-  occupation   String?
-  biography    String?  @db.Text
-  contactEmail String?
-  contactPhone String?
-
-  // ── User Account Link ───────────────────────────────────
-  userId String?
-  user   User?   @relation("UserMemberships", fields: [userId], references: [id])
-
-  // ── Role in Family Workspace ────────────────────────────
-  role FamilyRole @default(VIEWER)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // ── Relationships ───────────────────────────────────────
-  relationshipsAsFrom Relationship[] @relation("RelationshipFrom")
-  relationshipsAsTo   Relationship[] @relation("RelationshipTo")
+  id                  String           @id @default(cuid())
+  familyId            String
+  fullName            String
+  nickname            String?
+  gender              Gender
+  birthDate           DateTime?
+  deathDate           DateTime?
+  placeOfBirth        String?
+  photoUrl            String?
+  isDeceased          Boolean          @default(false)
+  binBinti            String?
+  icNumber            String?
+  currentAddress      String?
+  negeri              String?
+  religion            Religion         @default(ISLAM)
+  familyBranch        String?
+  generationalTitle   String?
+  occupation          String?
+  biography           String?
+  contactEmail        String?
+  contactPhone        String?
+  userId              String?
+  role                FamilyRole       @default(VIEWER)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  family              Family           @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  user                User?            @relation("UserMemberships", fields: [userId], references: [id])
+  photos              Photo[]
+  relationshipsAsFrom Relationship[]   @relation("RelationshipFrom")
+  relationshipsAsTo   Relationship[]   @relation("RelationshipTo")
   treeLayouts         TreeNodeLayout[]
-
-  // ── Photos ──────────────────────────────────────────────
-  photos Photo[]
 }
 
 model Relationship {
-  id       String           @id @default(cuid())
-  familyId String
-  fromId   String           // member who "has" this relationship
-  toId     String           // the related member
-  type     RelationshipType
-  label    String?          // optional custom label
-  createdAt DateTime        @default(now())
-
-  from FamilyMember @relation("RelationshipFrom", fields: [fromId], references: [id], onDelete: Cascade)
-  to   FamilyMember @relation("RelationshipTo", fields: [toId], references: [id], onDelete: Cascade)
+  id        String           @id @default(cuid())
+  familyId  String
+  fromId    String
+  toId      String
+  type      RelationshipType
+  label     String?
+  createdAt DateTime         @default(now())
+  from      FamilyMember     @relation("RelationshipFrom", fields: [fromId], references: [id], onDelete: Cascade)
+  to        FamilyMember     @relation("RelationshipTo", fields: [toId], references: [id], onDelete: Cascade)
 
   @@unique([fromId, toId, type])
   @@index([familyId])
@@ -158,34 +127,34 @@ model Relationship {
 model Photo {
   id           String        @id @default(cuid())
   familyId     String
-  family       Family        @relation(fields: [familyId], references: [id], onDelete: Cascade)
   memberId     String?
-  member       FamilyMember? @relation(fields: [memberId], references: [id])
   url          String
   thumbnailUrl String?
   caption      String?
   takenAt      DateTime?
   category     PhotoCategory @default(FAMILY)
   uploadedById String
-  uploader     User          @relation("PhotoUploader", fields: [uploadedById], references: [id])
   createdAt    DateTime      @default(now())
+  family       Family        @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  member       FamilyMember? @relation(fields: [memberId], references: [id])
+  uploader     User          @relation("PhotoUploader", fields: [uploadedById], references: [id])
 
   @@index([familyId])
   @@index([memberId])
 }
 
 model Invite {
-  id       String     @id @default(cuid())
-  familyId String
-  family   Family     @relation(fields: [familyId], references: [id], onDelete: Cascade)
-  email    String
-  role     FamilyRole @default(VIEWER)
-  token    String     @unique @default(cuid())
-  status   InviteStatus @default(PENDING)
-  senderId String
-  sender   User       @relation("InviteSender", fields: [senderId], references: [id])
+  id        String       @id @default(cuid())
+  familyId  String
+  email     String
+  role      FamilyRole   @default(VIEWER)
+  token     String       @unique @default(cuid())
+  status    InviteStatus @default(PENDING)
+  senderId  String
   expiresAt DateTime
-  createdAt DateTime  @default(now())
+  createdAt DateTime     @default(now())
+  family    Family       @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  sender    User         @relation("InviteSender", fields: [senderId], references: [id])
 
   @@index([familyId])
   @@index([email])
@@ -194,22 +163,18 @@ model Invite {
 model TreeNodeLayout {
   id        String       @id @default(cuid())
   familyId  String
-  family    Family       @relation(fields: [familyId], references: [id], onDelete: Cascade)
   memberId  String
-  member    FamilyMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
   x         Float
   y         Float
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
+  family    Family       @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  member    FamilyMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   @@unique([familyId, memberId])
   @@index([familyId])
   @@index([memberId])
 }
-
-// ============================================================
-// ENUMS
-// ============================================================
 
 enum Gender {
   MALE
