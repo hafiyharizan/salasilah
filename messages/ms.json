@@ -378,6 +378,22 @@
     "noLocationsDesc": "Tambah alamat semasa dan maklumat negeri kepada ahli keluarga untuk melihat mereka di peta",
     "addLocations": "Kemaskini Ahli"
   },
+  "invite": {
+    "title": "Anda Dijemput!",
+    "subtitle": "{sender} telah menjemput anda untuk menyertai keluarga {family}",
+    "family": "Keluarga",
+    "role": "Peranan",
+    "invitedEmail": "E-mel Jemputan",
+    "accept": "Terima Jemputan",
+    "accepting": "Menerima...",
+    "alreadyAccepted": "Anda telah menyertai keluarga ini.",
+    "goToFamily": "Pergi ke Keluarga",
+    "expired": "Pautan jemputan ini telah tamat tempoh.",
+    "emailMismatch": "Jemputan ini dihantar ke alamat e-mel yang berbeza. Sila log masuk dengan akaun yang betul.",
+    "invalidInvite": "Pautan jemputan ini tidak sah atau tidak wujud.",
+    "errorGeneric": "Ralat berlaku. Sila cuba lagi.",
+    "backHome": "Kembali ke Papan Pemuka"
+  },
   "notFound": {
     "title": "Halaman Tidak Dijumpai",
     "desc": "Halaman yang anda cari tidak wujud atau telah dialihkan.",

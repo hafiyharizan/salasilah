@@ -378,6 +378,22 @@
     "noLocationsDesc": "Add current address and state (negeri) information to family members to see them on the map",
     "addLocations": "Update Members"
   },
+  "invite": {
+    "title": "You're Invited!",
+    "subtitle": "{sender} has invited you to join the {family} family",
+    "family": "Family",
+    "role": "Role",
+    "invitedEmail": "Invited Email",
+    "accept": "Accept Invitation",
+    "accepting": "Accepting...",
+    "alreadyAccepted": "You have already joined this family.",
+    "goToFamily": "Go to Family",
+    "expired": "This invite link has expired.",
+    "emailMismatch": "This invite was sent to a different email address. Please sign in with the correct account.",
+    "invalidInvite": "This invite link is invalid or does not exist.",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "backHome": "Back to Dashboard"
+  },
   "notFound": {
     "title": "Page Not Found",
     "desc": "The page you are looking for does not exist or has been moved.",
