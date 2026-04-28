@@ -10,7 +10,7 @@ async function main() {
   const hashedPassword = await bcrypt.hash('demo1234', 10)
   const demoUser = await prisma.user.upsert({
     where: { email: 'demo@salasilah.my' },
-    update: {},
+    update: { password: hashedPassword, name: 'Ahmad Fadzillah' },
     create: {
       email: 'demo@salasilah.my',
       name: 'Ahmad Fadzillah',
@@ -35,8 +35,10 @@ async function main() {
   console.log('✅ Created family:', family.name)
 
   // ── Generation 1: Grandparents ──────────────────────────────────
-  const tok = await prisma.familyMember.create({
-    data: {
+  const tok = await prisma.familyMember.upsert({
+    where: { id: 'member-tok-001' },
+    update: {},
+    create: {
       id: 'member-tok-001',
       familyId: family.id,
       fullName: 'Ahmad bin Ibrahim',
@@ -58,8 +60,10 @@ async function main() {
     },
   })
 
-  const wan = await prisma.familyMember.create({
-    data: {
+  const wan = await prisma.familyMember.upsert({
+    where: { id: 'member-wan-001' },
+    update: {},
+    create: {
       id: 'member-wan-001',
       familyId: family.id,
       fullName: 'Siti binti Yusof',
@@ -82,8 +86,10 @@ async function main() {
   })
 
   // ── Generation 2: Children ──────────────────────────────────────
-  const pakLong = await prisma.familyMember.create({
-    data: {
+  const pakLong = await prisma.familyMember.upsert({
+    where: { id: 'member-paklong-001' },
+    update: {},
+    create: {
       id: 'member-paklong-001',
       familyId: family.id,
       fullName: 'Mohd Fauzi bin Ahmad',
@@ -102,8 +108,10 @@ async function main() {
     },
   })
 
-  const makLongSpouse = await prisma.familyMember.create({
-    data: {
+  const makLongSpouse = await prisma.familyMember.upsert({
+    where: { id: 'member-maklong-001' },
+    update: {},
+    create: {
       id: 'member-maklong-001',
       familyId: family.id,
       fullName: 'Rohani binti Hassan',
@@ -122,8 +130,10 @@ async function main() {
     },
   })
 
-  const pakNgah = await prisma.familyMember.create({
-    data: {
+  const pakNgah = await prisma.familyMember.upsert({
+    where: { id: 'member-pakngah-001' },
+    update: {},
+    create: {
       id: 'member-pakngah-001',
       familyId: family.id,
       fullName: 'Mohd Razif bin Ahmad',
@@ -143,8 +153,10 @@ async function main() {
     },
   })
 
-  const makNgahSpouse = await prisma.familyMember.create({
-    data: {
+  const makNgahSpouse = await prisma.familyMember.upsert({
+    where: { id: 'member-makngah-001' },
+    update: {},
+    create: {
       id: 'member-makngah-001',
       familyId: family.id,
       fullName: 'Faridah binti Osman',
@@ -163,8 +175,10 @@ async function main() {
     },
   })
 
-  const makTeh = await prisma.familyMember.create({
-    data: {
+  const makTeh = await prisma.familyMember.upsert({
+    where: { id: 'member-makteh-001' },
+    update: {},
+    create: {
       id: 'member-makteh-001',
       familyId: family.id,
       fullName: 'Norhasimah binti Ahmad',
@@ -183,8 +197,10 @@ async function main() {
     },
   })
 
-  const pakTehSpouse = await prisma.familyMember.create({
-    data: {
+  const pakTehSpouse = await prisma.familyMember.upsert({
+    where: { id: 'member-pakteh-001' },
+    update: {},
+    create: {
       id: 'member-pakteh-001',
       familyId: family.id,
       fullName: 'Zulkifli bin Hamid',
@@ -203,8 +219,10 @@ async function main() {
     },
   })
 
-  const pakSu = await prisma.familyMember.create({
-    data: {
+  const pakSu = await prisma.familyMember.upsert({
+    where: { id: 'member-paksu-001' },
+    update: {},
+    create: {
       id: 'member-paksu-001',
       familyId: family.id,
       fullName: 'Mohd Khairul bin Ahmad',
@@ -223,8 +241,10 @@ async function main() {
     },
   })
 
-  const makSuSpouse = await prisma.familyMember.create({
-    data: {
+  const makSuSpouse = await prisma.familyMember.upsert({
+    where: { id: 'member-maksu-001' },
+    update: {},
+    create: {
       id: 'member-maksu-001',
       familyId: family.id,
       fullName: 'Nurul Ain binti Aziz',
@@ -244,8 +264,10 @@ async function main() {
   })
 
   // ── Generation 3: Grandchildren ─────────────────────────────────
-  const fadzillah = await prisma.familyMember.create({
-    data: {
+  const fadzillah = await prisma.familyMember.upsert({
+    where: { id: 'member-fadzillah-001' },
+    update: {},
+    create: {
       id: 'member-fadzillah-001',
       familyId: family.id,
       fullName: 'Ahmad Fadzillah bin Mohd Razif',
@@ -264,8 +286,10 @@ async function main() {
     },
   })
 
-  const syafiqah = await prisma.familyMember.create({
-    data: {
+  const syafiqah = await prisma.familyMember.upsert({
+    where: { id: 'member-syafiqah-001' },
+    update: {},
+    create: {
       id: 'member-syafiqah-001',
       familyId: family.id,
       fullName: 'Nur Syafiqah binti Mohd Razif',
@@ -283,8 +307,10 @@ async function main() {
     },
   })
 
-  const hafizuddin = await prisma.familyMember.create({
-    data: {
+  const hafizuddin = await prisma.familyMember.upsert({
+    where: { id: 'member-hafizuddin-001' },
+    update: {},
+    create: {
       id: 'member-hafizuddin-001',
       familyId: family.id,
       fullName: 'Hafizuddin bin Mohd Fauzi',
@@ -302,8 +328,10 @@ async function main() {
     },
   })
 
-  const izzatul = await prisma.familyMember.create({
-    data: {
+  const izzatul = await prisma.familyMember.upsert({
+    where: { id: 'member-izzatul-001' },
+    update: {},
+    create: {
       id: 'member-izzatul-001',
       familyId: family.id,
       fullName: 'Izzatul Husna binti Mohd Fauzi',
@@ -321,8 +349,10 @@ async function main() {
     },
   })
 
-  const amirulhakimi = await prisma.familyMember.create({
-    data: {
+  const amirulhakimi = await prisma.familyMember.upsert({
+    where: { id: 'member-amirul-001' },
+    update: {},
+    create: {
       id: 'member-amirul-001',
       familyId: family.id,
       fullName: 'Amirul Hakimi bin Zulkifli',
@@ -340,8 +370,10 @@ async function main() {
     },
   })
 
-  const nurhidayah = await prisma.familyMember.create({
-    data: {
+  const nurhidayah = await prisma.familyMember.upsert({
+    where: { id: 'member-hidayah-001' },
+    update: {},
+    create: {
       id: 'member-hidayah-001',
       familyId: family.id,
       fullName: 'Nur Hidayah binti Zulkifli',
@@ -359,8 +391,10 @@ async function main() {
     },
   })
 
-  const aisyah = await prisma.familyMember.create({
-    data: {
+  const aisyah = await prisma.familyMember.upsert({
+    where: { id: 'member-aisyah-001' },
+    update: {},
+    create: {
       id: 'member-aisyah-001',
       familyId: family.id,
       fullName: 'Aisyah Humaira binti Mohd Khairul',
@@ -378,8 +412,10 @@ async function main() {
     },
   })
 
-  const ibrahim = await prisma.familyMember.create({
-    data: {
+  const ibrahim = await prisma.familyMember.upsert({
+    where: { id: 'member-ibrahim-001' },
+    update: {},
+    create: {
       id: 'member-ibrahim-001',
       familyId: family.id,
       fullName: 'Ibrahim Mikael bin Mohd Khairul',
