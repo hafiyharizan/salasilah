@@ -10,7 +10,7 @@
 - **Auth**: NextAuth.js v5 (Credentials + Google OAuth)
 - **Tree Visualization**: React Flow (`@xyflow/react`)
 - **Image Storage**: Supabase Storage
-- **Deployment**: Vercel
+- **Deployment**: Netlify
 
 ---
 
