@@ -1,0 +1,112 @@
+name: Netlify Deployments
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: netlify-deploy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: Preview
+      url: ${{ steps.deploy.outputs.deploy_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy preview to Netlify
+        id: deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${NETLIFY_AUTH_TOKEN:-}" ] || [ -z "${NETLIFY_SITE_ID:-}" ]; then
+            echo "NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID secrets are required."
+            exit 1
+          fi
+
+          deploy_json="$(npx netlify-cli deploy --build --json --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN" --message "Preview deploy for PR #${{ github.event.pull_request.number }}")"
+          printf '%s' "$deploy_json" > deploy-result.json
+          cat deploy-result.json
+
+          deploy_url="$(node -e "const fs=require('fs'); const data=JSON.parse(fs.readFileSync('deploy-result.json','utf8')); console.log(data.deploy_url || data.deploy_ssl_url || data.url || '')")"
+
+          if [ -z "$deploy_url" ]; then
+            echo "Could not determine the Netlify preview URL from the deploy output."
+            exit 1
+          fi
+
+          echo "deploy_url=$deploy_url" >> "$GITHUB_OUTPUT"
+
+  deploy-production:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: Production
+      url: ${{ steps.deploy.outputs.deploy_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy production to Netlify
+        id: deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${NETLIFY_AUTH_TOKEN:-}" ] || [ -z "${NETLIFY_SITE_ID:-}" ]; then
+            echo "NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID secrets are required."
+            exit 1
+          fi
+
+          deploy_json="$(npx netlify-cli deploy --build --prod --json --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN" --message "Production deploy for ${GITHUB_SHA}")"
+          printf '%s' "$deploy_json" > deploy-result.json
+          cat deploy-result.json
+
+          deploy_url="$(node -e "const fs=require('fs'); const data=JSON.parse(fs.readFileSync('deploy-result.json','utf8')); console.log(data.deploy_url || data.deploy_ssl_url || data.url || '')")"
+
+          if [ -z "$deploy_url" ]; then
+            echo "Could not determine the Netlify production URL from the deploy output."
+            exit 1
+          fi
+
+          echo "deploy_url=$deploy_url" >> "$GITHUB_OUTPUT"
