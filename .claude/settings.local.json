@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); print\\(data[0][''''text'''']\\)\")"
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); print\\(data[0][''''text'''']\\)\")",
+      "Read(//c/Users/hafiy/Documents/salasilah/node_modules/next-auth/**)",
+      "Bash(gh:*)",
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(where gh:*)",
+      "Bash(\"/c/Program Files/GitHub:*)"
     ]
   }
 }

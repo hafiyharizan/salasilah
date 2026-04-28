@@ -12,7 +12,10 @@ const registerSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, password } = registerSchema.parse(body)
+    const parsed = registerSchema.parse(body)
+    const name = parsed.name
+    const email = parsed.email.toLowerCase().trim()
+    const password = parsed.password
 
     // Check if user already exists
     const existing = await prisma.user.findUnique({ where: { email } })
