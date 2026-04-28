@@ -14,6 +14,17 @@
 
 ---
 
+## Deployment
+
+- GitHub deployments are published through `.github/workflows/netlify-deploy.yml`.
+- Add these GitHub Actions repository secrets before enabling the workflow:
+  - `NETLIFY_AUTH_TOKEN`
+  - `NETLIFY_SITE_ID`
+- Pull requests from this repository create a Netlify **Preview** deployment.
+- Pushes to `main` create the Netlify **Production** deployment.
+
+---
+
 ## Quick Start
 
 ### 1. Install dependencies

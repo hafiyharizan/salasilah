@@ -1,0 +1,81 @@
+name: Netlify Deployments
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: netlify-deploy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: ${{ github.event_name == 'push' && 'Production' || 'Preview' }}
+      url: ${{ steps.deploy.outputs.deploy_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set deployment details
+        id: details
+        run: |
+          set -euo pipefail
+
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "deploy_flags=--prod" >> "$GITHUB_OUTPUT"
+            echo "deploy_message=Production deploy for ${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy_flags=" >> "$GITHUB_OUTPUT"
+            echo "deploy_message=Preview deploy for PR #${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy to Netlify
+        id: deploy
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          DEPLOY_FLAGS: ${{ steps.details.outputs.deploy_flags }}
+          DEPLOY_MESSAGE: ${{ steps.details.outputs.deploy_message }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${NETLIFY_AUTH_TOKEN:-}" ] || [ -z "${NETLIFY_SITE_ID:-}" ]; then
+            echo "NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID secrets are required."
+            exit 1
+          fi
+
+          deploy_json="$(npx netlify-cli deploy --build ${DEPLOY_FLAGS} --json --site "$NETLIFY_SITE_ID" --auth "$NETLIFY_AUTH_TOKEN" --message "$DEPLOY_MESSAGE")"
+          printf '%s' "$deploy_json" > deploy-result.json
+          cat deploy-result.json
+
+          deploy_url="$(jq -r '.deploy_url // .deploy_ssl_url // .url // empty' deploy-result.json)"
+
+          if [ -z "$deploy_url" ]; then
+            echo "Could not determine the Netlify deploy URL from the deploy output."
+            exit 1
+          fi
+
+          echo "deploy_url=$deploy_url" >> "$GITHUB_OUTPUT"
