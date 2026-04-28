@@ -22,7 +22,6 @@
   - `NETLIFY_SITE_ID`
 - Pull requests from this repository create a Netlify **Preview** deployment.
 - Pushes to `main` create the Netlify **Production** deployment.
-- To stop GitHub from showing outdated Vercel deployments, disconnect the repository from Vercel or disable its Git integration in Vercel after this workflow is enabled.
 
 ---
 
